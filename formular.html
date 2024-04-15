@@ -5,17 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formular</title>
     <style>
+
+        /* Definiere Farben */
+        :root {
+            --primary-color: #4992c7; /* Blau */
+            --background-color: #f0f8ff; /* Hintergrundfarbe */
+            --grey-color: #cccccc; /* Grau */
+            --light-grey-color: #f3f3f3; /* Hellgrau */
+            --form-color: #ffffff; /* Formularfarbe */
+            --text-color: #000000; /* Textfarbe */
+            --success-color: #28a745; /* Grün */
+            --red-color: #dc3545; /* Rot */
+        }
+
         /* Globale Einstellungen */
         body {
-            background-color: #f0f8ff; /* Hintergrundfarbe */
+            background-color: var(--background-color); /* Hintergrundfarbe */
             font-family: Arial, sans-serif; /* Schriftart auf Arial setzen */
             padding: 20px; /* Abstand zur Seite */
+        }
+
+        /* Container für den gesamten Inhalt */
+        .container {
+            max-width: 600px; /* Maximalbreite des Containers */
+            height: 800px; /* Höhe des Containers */
+            margin: 0 auto; /* Zentriert auf der Seite */
+            border-radius: 10px; /* Abgerundete Ecken */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Schatten */
+            padding: 20px; /* Innenabstand */
+            position: relative; /* Positionierung für die absolute Positionierung des Ladekreises */
+            background-color: var(--form-color); /* Hintergrundfarbe */
         }
 
         /* Design für das Formular */
         form {
             max-width: 100%;
             margin: 0 auto;
+            color: var(--text-color); /* Textfarbe */
+            accent-color: var(--primary-color); /* Akzentfarbe */
         }
 
         /* Design für die Labels */
@@ -32,20 +59,20 @@
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
-            border: 1px solid #cccccc;
+            border: 1px solid var(--grey-color);
             border-radius: 5px;
             box-sizing: border-box;
             position: relative;
-            background: #ffffff;
+            background: var(--light-grey-color);
         }
 
         /* Design für den Senden-Button */
         input[type="submit"] {
             width: 100%; /* Breite */
             padding: 10px; /* Abstand zur Seite */
-            background-color: #007bff; /* Hintergrundfarbe */
+            background-color: var(--primary-color); /* Hintergrundfarbe */
             border: none; /* Border */
-            color: #ffffff; /* Textfarbe */
+            color: var(--form-color); /* Textfarbe */
             border-radius: 5px; /* Border-Radius */
             cursor: pointer;
             font-weight: bold;
@@ -54,18 +81,32 @@
 
         /* Design für den Senden-Button beim Hovern */
         input[type="submit"]:hover {
-            background-color: #0056b3; /* Hintergrundfarbe */
+            /* Wähle als Hintergrundfarbe eine leicht dunklere als die primary */
+            background-color: #3a7ca6;
         }
 
         /* Design für Felder, wenn diese ausgewählt sind */
         input:focus {
-            border: 2px solid #4d4d4d; /* Border Breite und Farbe */
+            border: 2px solid var(--primary-color); /* Border */
         }
 
         /* Ergänze rotes Sternchen für Pflichtfelder */
         label.required:after {
             content: " *";
-            color: red;
+            color: var(--red-color);
+        }
+
+        /* Header-Design */
+        #header {
+            text-align: left;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+
+        /* Design für den Spacer nach dem Header */
+        #spacer {
+            border: none;
+            border-top: 1px solid var(--grey-color);
         }
 
         /* Positionierung für das Nummernstatus-Span-Element */
@@ -76,67 +117,74 @@
             transform: translateY(calc(-50% - 10px));
         }
 
-        /* Extra Einstellungen für Handy*/
-        @media only screen and (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
+        /* Success- und Error-Messages */
+        .message {
+            display: none; /* Standardmäßig ausgeblendet */
+            position: absolute;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; /* Volle Breite des Containers */
         }
 
     </style>
 </head>
 <body>
-<div id="spacer" style="display: none; height: 50px;"></div>
-<div id="loading" style="display: none; text-align: center;">
-    <svg width="50px" height="50px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-        <circle cx="50" cy="50" fill="none" stroke="#007bff" stroke-width="8" r="35"
-                stroke-dasharray="164.93361431346415 56.97787143782138">
-            <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s"
-                              values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
-        </circle>
-    </svg>
-    <div>Bitte warten...</div>
-</div>
-<form id="form" action="#" method="post">
-    <label for="vorname" class="required">Vorname</label>
-    <input type="text" id="vorname" name="vorname" required><br>
-
-    <label for="nachname" class="required">Nachname</label>
-    <input type="text" id="nachname" name="nachname" required><br>
-
-    <label for="email" class="required">E-Mail</label>
-    <input type="email" id="email" name="email" required><br>
-
-    <label for="geschlecht" class="required">Geschlecht</label>
-    <select id="geschlecht" name="geschlecht" required>
-        <option value="W" selected>Weiblich</option>
-        <option value="M">Männlich</option>
-        <option value="D">Divers</option>
-    </select><br>
-
-    <label for="groesse" class="required">Größe</label>
-    <select id="groesse" name="groesse" required>
-        <option value="XS">XS</option>
-        <option value="S">S</option>
-        <option value="M" selected>M</option>
-        <option value="L">L</option>
-        <option value="XL">XL</option>
-        <option value="XXL">XXL</option>
-    </select><br>
-
-    <label for="nummer" class="required">Nummer</label>
-    <div style="position: relative;">
-        <input type="tel" id="nummer" name="nummer" required>
-        <span id="nummerStatus" class="nummer-status"></span>
+<div class="container">
+    <div id="header">
+        <h1>Basketballshirts</h1>
+        <hr id="spacer">
     </div>
+    <div id="loading"
+         style="display: none; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <svg width="50px" height="50px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <circle cx="50" cy="50" fill="none" stroke="#007bff" stroke-width="8" r="35"
+                    stroke-dasharray="164.93361431346415 56.97787143782138">
+                <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s"
+                                  values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+            </circle>
+        </svg>
+        <div>Bitte warten...</div>
+    </div>
+    <form id="form" action="#" method="post">
+        <label for="vorname" class="required">Vorname</label>
+        <input type="text" id="vorname" name="vorname" required><br>
 
-    <input type="submit" value="Senden">
-</form>
+        <label for="nachname" class="required">Nachname</label>
+        <input type="text" id="nachname" name="nachname" required><br>
 
+        <label for="email" class="required">E-Mail</label>
+        <input type="email" id="email" name="email" required><br>
 
-<div id="successMessage" style="display: none; color: green; text-align: center;">Erfolgreich gesendet!</div>
-<div id="errorMessage" style="display: none; color: red; text-align: center; padding-bottom: 5px;">Fehler beim Senden
-    des Formulars. Bitte versuche es erneut.
+        <label for="geschlecht" class="required">Geschlecht</label>
+        <select id="geschlecht" name="geschlecht" required>
+            <option value="W" selected>Weiblich</option>
+            <option value="M">Männlich</option>
+            <option value="D">Divers</option>
+        </select><br>
+
+        <label for="groesse" class="required">Größe</label>
+        <select id="groesse" name="groesse" required>
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M" selected>M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+        </select><br>
+
+        <label for="nummer" class="required">Nummer</label>
+        <div style="position: relative;">
+            <input type="tel" id="nummer" name="nummer" required>
+            <span id="nummerStatus" class="nummer-status"></span>
+        </div>
+
+        <input type="submit" value="Senden">
+    </form>
+
+    <div id="successMessage" class="message success">Erfolgreich gesendet!</div>
+    <div id="errorMessage" class="message error">Fehler beim Senden des Formulars. Bitte versuche es erneut.</div>
 </div>
 
 <script>
@@ -151,7 +199,6 @@
         let loadingDiv = document.getElementById('loading'); // Ladekreis
         let successMessageDiv = document.getElementById('successMessage'); // Erfolgsmeldung
         let errorMessageDiv = document.getElementById('errorMessage'); // Fehlermeldung
-        let spacerDiv = document.getElementById('spacer'); // Spacer (Abstandshalter)
         let form = document.getElementById('form'); // Formular
 
         // Überprüfe, ob die Nummer verfügbar ist
@@ -164,7 +211,6 @@
             return;
         }
 
-        spacerDiv.style.display = 'block'; // Spacer anzeigen
         loadingDiv.style.display = 'block'; // Ladekreis anzeigen
         successMessageDiv.style.display = 'none'; // Erfolgsmeldung ausblenden
         errorMessageDiv.style.display = 'none'; // Fehlermeldung ausblenden
