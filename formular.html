@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formular</title>
+    <style>
+        /* Globale Einstellungen */
+        body {
+            background-color: #f0f8ff; /* Hintergrundfarbe */
+            font-family: Arial, sans-serif; /* Schriftart auf Arial setzen */
+            padding: 20px; /* Abstand zur Seite */
+        }
+
+        /* Design für das Formular */
+        form {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Design für die Labels */
+        label {
+            margin-bottom: 8px; /* Platz zwischen Label und Input */
+            display: block;
+        }
+
+        /* Design für die Felder */
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            position: relative;
+            background: #ffffff;
+        }
+
+        /* Design für den Senden-Button */
+        input[type="submit"] {
+            width: 100%; /* Breite */
+            padding: 10px; /* Abstand zur Seite */
+            background-color: #007bff; /* Hintergrundfarbe */
+            border: none; /* Border */
+            color: #ffffff; /* Textfarbe */
+            border-radius: 5px; /* Border-Radius */
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 25px;
+        }
+
+        /* Design für den Senden-Button beim Hovern */
+        input[type="submit"]:hover {
+            background-color: #0056b3; /* Hintergrundfarbe */
+        }
+
+        /* Design für Felder, wenn diese ausgewählt sind */
+        input:focus {
+            border: 2px solid #4d4d4d; /* Border Breite und Farbe */
+        }
+
+        /* Ergänze rotes Sternchen für Pflichtfelder */
+        label.required:after {
+            content: " *";
+            color: red;
+        }
+
+        /* Positionierung für das Nummernstatus-Span-Element */
+        .nummer-status {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(calc(-50% - 10px));
+        }
+
+        /* Extra Einstellungen für Handy*/
+        @media only screen and (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div id="spacer" style="display: none; height: 50px;"></div>
+<div id="loading" style="display: none; text-align: center;">
+    <svg width="50px" height="50px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+        <circle cx="50" cy="50" fill="none" stroke="#007bff" stroke-width="8" r="35"
+                stroke-dasharray="164.93361431346415 56.97787143782138">
+            <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s"
+                              values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+        </circle>
+    </svg>
+    <div>Bitte warten...</div>
+</div>
+<form id="form" action="#" method="post">
+    <label for="vorname" class="required">Vorname</label>
+    <input type="text" id="vorname" name="vorname" required><br>
+
+    <label for="nachname" class="required">Nachname</label>
+    <input type="text" id="nachname" name="nachname" required><br>
+
+    <label for="email" class="required">E-Mail</label>
+    <input type="email" id="email" name="email" required><br>
+
+    <label for="geschlecht" class="required">Geschlecht</label>
+    <select id="geschlecht" name="geschlecht" required>
+        <option value="W" selected>Weiblich</option>
+        <option value="M">Männlich</option>
+        <option value="D">Divers</option>
+    </select><br>
+
+    <label for="groesse" class="required">Größe</label>
+    <select id="groesse" name="groesse" required>
+        <option value="XS">XS</option>
+        <option value="S">S</option>
+        <option value="M" selected>M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+        <option value="XXL">XXL</option>
+    </select><br>
+
+    <label for="nummer" class="required">Nummer</label>
+    <div style="position: relative;">
+        <input type="tel" id="nummer" name="nummer" required>
+        <span id="nummerStatus" class="nummer-status"></span>
+    </div>
+
+    <input type="submit" value="Senden">
+</form>
+
+
+<div id="successMessage" style="display: none; color: green; text-align: center;">Erfolgreich gesendet!</div>
+<div id="errorMessage" style="display: none; color: red; text-align: center; padding-bottom: 5px;">Fehler beim Senden
+    des Formulars. Bitte versuche es erneut.
+</div>
+
+<script>
+    document.getElementById('form').addEventListener('submit', function (event) {
+        /**
+         * Event-Listener für den Senden-Button
+         */
+        event.preventDefault(); // Verhindert das Standardverhalten des Formulars (Seitenwechsel)
+
+        let formData = new FormData(this); // Formular-Eingaben
+        let xhr = new XMLHttpRequest(); // XMLHttpRequest-Objekt
+        let loadingDiv = document.getElementById('loading'); // Ladekreis
+        let successMessageDiv = document.getElementById('successMessage'); // Erfolgsmeldung
+        let errorMessageDiv = document.getElementById('errorMessage'); // Fehlermeldung
+        let spacerDiv = document.getElementById('spacer'); // Spacer (Abstandshalter)
+        let form = document.getElementById('form'); // Formular
+
+        // Überprüfe, ob die Nummer verfügbar ist
+        let nummerInput = document.getElementById('nummer');
+        let nummer = nummerInput.value.trim();
+        if (checkNumberAvailability(nummer)) {
+            // Nummer nicht verfügbar, Formular nicht senden
+            errorMessageDiv.style.display = 'block'; // Fehlermeldung anzeigen
+            errorMessageDiv.innerText = 'Nummer ist bereits vergeben oder ungültig'; // Fehlermeldung setzen
+            return;
+        }
+
+        spacerDiv.style.display = 'block'; // Spacer anzeigen
+        loadingDiv.style.display = 'block'; // Ladekreis anzeigen
+        successMessageDiv.style.display = 'none'; // Erfolgsmeldung ausblenden
+        errorMessageDiv.style.display = 'none'; // Fehlermeldung ausblenden
+        form.style.display = 'none'; // Formular ausblenden
+
+        xhr.open('POST', 'https://script.google.com/macros/s/AKfycbxXfCRP4KVeRWsxsmDSanWi7DsgqmgLx8-dUQa1h_DxXeQ7lzzlsqrpkncgbnD3MOSIxQ/exec', true);
+        xhr.onload = function () {
+            loadingDiv.style.display = 'none'; // Ladekreis ausblenden
+            if (xhr.status >= 200 && xhr.status < 300) {
+                successMessageDiv.style.display = 'block'; // Erfolgsmeldung anzeigen
+                console.log('Formular erfolgreich übermittelt.'); // Logge die erfolgreiche Übermittlung
+            } else {
+                errorMessageDiv.style.display = 'block'; // Fehlermeldung anzeigen
+                console.error('Fehler beim Übermitteln des Formulars.'); // Logge den Fehler
+            }
+        };
+        xhr.onerror = function () {
+            loadingDiv.style.display = 'none'; // Ladekreis ausblenden
+            errorMessageDiv.style.display = 'block'; // Fehlermeldung anzeigen
+            errorMessageDiv.innerText = 'Fehler beim Senden des Formulars. Bitte versuche es erneut.'; // Fehlermeldung setzen
+            console.error('Fehler beim Senden des Formulars. Bitte versuche es erneut.'); // Logge den Fehler
+        };
+        xhr.send(formData);
+    });
+
+    document.getElementById('nummer').addEventListener('input', function () {
+        /**
+         * Event-Listener für die Eingabe in das Nummern-Feld
+         * Überprüfe dauerhaft, ob die Nummer verfügbar oder nicht verfügbar ist
+         * @type {HTMLElement | *}
+         */
+
+        let nummerInput = this; // Input Element
+        let nummerStatus = document.getElementById('nummerStatus'); // Span-Element für den Status
+        let nummer = nummerInput.value.trim(); // Eingegebene Nummer
+
+        // Wenn keine Nummer eingegeben wurde, zeige gar nichts an
+        if (nummer === '') {
+            nummerStatus.innerHTML = '';
+            return;
+        }
+
+        if (checkNumberAvailability(nummer)) {
+            nummerStatus.innerHTML = '&#10007;'; // Zeige ein Kreuz an, um zu zeigen, dass die Nummer nicht verfügbar ist
+            nummerInput.classList.add('error'); // Füge die Klasse 'error' hinzu
+            nummerStatus.style.color = 'red'; // Setze die Farbe auf Rot
+        } else {
+            nummerStatus.innerHTML = '&#10003;'; // Zeige einen Haken an, um zu zeigen, dass die Nummer verfügbar ist
+            nummerInput.classList.remove('error'); // Entferne die Klasse 'error'
+            nummerStatus.style.color = 'green'; // Setze die Farbe auf Grün
+            document.getElementById('errorMessage').style.display = 'none'; // Fehlermeldung ausblenden
+        }
+    });
+
+    function checkNumberAvailability(number) {
+        /**
+         * Überprüft, ob die eingegebene Nummer bereits verwendet wurde oder nicht und ob es sich um eine
+         * legitime Nummer handelt
+         * @param number die eingegebene Nummer
+         */
+        if (!isNaN(number) && number.toString().length <= 3) {
+            return usedNumbers.includes(number); // Return false, wenn die Nummer verfügbar und legitim ist
+        } else {
+            return true; // Return true, wenn die Nummer bereits verwendet wurde oder ungültig ist
+        }
+    }
+
+    function fetchUsedNumbers() {
+        /**
+         * Lädt die bisher verwendeten Nummern aus einer Google-Tabelle
+         */
+
+            // Data Map für die TSV-Datei
+        let dataMappings = [{
+                tsvUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTerExEBr8ckCDU8fQ8fq_YfJaO1owaFZzs9QO9vcb8tw0AWz_KmangKG472_w6A8xVsYlBQ1rif9v_/pub?gid=218877931&single=true&output=tsv',
+                range: 'A1:A',
+                storageKey: 'usedNumbers'
+            }];
+
+        // Lade die Daten aus der TSV-Datei
+        let fetchPromises = dataMappings.map(mapping =>
+            fetch(mapping.tsvUrl + '&range=' + mapping.range)
+                .then(response => response.text())
+                .then(data => {
+                    // Trenne die einzelnen Werte voneinander
+                    let numbers = data.split('\r\n');
+                    // Filter leere Strings
+                    numbers = numbers.filter(number => number.trim() !== '');
+                    // Speichere die Nummern in der globalen Variable
+                    usedNumbers.push(...numbers);
+                })
+                .catch(error => console.error('Fehler beim Laden der TSV-Daten:', error))
+        );
+
+        // Warte auf das Ende aller Fetch-Requests
+        Promise.all(fetchPromises)
+            .then(() => {
+                console.log('Die Daten wurden erfolgreich geladen');
+                console.log('Die geladenen Zahlen sind:', usedNumbers);
+            })
+            .catch(error => console.error('Fehler beim Laden der Daten:', error));
+    }
+
+
+    // Speichert die bisher verwendeten Nummern
+    let usedNumbers = [];
+    // Rufe die bisher verwendeten Nummern ab
+    fetchUsedNumbers();
+
+</script>
+</body>
+</html>
