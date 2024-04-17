@@ -463,11 +463,7 @@
          * legitime Nummer handelt
          * @param number die eingegebene Nummer
          */
-        if (!isNaN(number) && number.toString().length <= 2 && !usedNumbers.includes(number) && !number.startsWith('0')) {
-            return false; // Return false, wenn die Nummer verfügbar und legitim ist
-        } else {
-            return true; // Return true, wenn die Nummer bereits verwendet wurde oder ungültig ist
-        }
+        return !(!isNaN(number) && number.toString().length <= 2 && !usedNumbers.includes(number) && !number.startsWith('0'));
     }
 
     function fetchUsedNumbers() {
