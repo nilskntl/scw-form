@@ -24,6 +24,10 @@
             padding: 20px; /* Abstand zur Seite */
         }
 
+        h1 {
+            font-size: 2em; /* Standard-Schriftgröße */
+        }
+
         /* Container für den gesamten Inhalt */
         .container {
             max-width: 100%; /* Maximalbreite des Containers */
@@ -141,6 +145,20 @@
         /* Styling für Vorname und Nachname Inputfelder */
         .name-container input, .auswahl-container select {
             width: calc(50% - 5px);
+        }
+
+        /* Media Query für kleinere Bildschirme */
+        @media screen and (max-width: 600px) {
+            h1 {
+                font-size: 1.5em; /* Kleinere Schriftgröße für kleinere Bildschirme */
+            }
+            body {
+                padding: 10px; /* Weniger Abstand zur Seite */
+            }
+
+            .container {
+                padding: 10px; /* Weniger Innenabstand */
+            }
         }
 
     </style>
