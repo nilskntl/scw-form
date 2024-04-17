@@ -149,6 +149,16 @@
             width: calc(50% - 5px);
         }
 
+        /* Styling für das Info Symbol */
+        #aufdruckInfo {
+            -webkit-user-select: none; /* Safari und ältere Versionen von Chrome */
+            -moz-user-select: none; /* Ältere Versionen von Firefox */
+            -ms-user-select: none; /* Internet Explorer */
+            user-select: none; /* Standard */
+            -webkit-touch-callout: none; /* Safari */
+        }
+
+
         /* Styling für das Pop-up-Feld */
         .popup {
             position: absolute;
@@ -270,14 +280,21 @@
         /**
          * Event-Listener für das Info-Symbol
          */
-        showPopup();
+        showPopup(); // Zeige das Pop-up-Feld an, wenn das Info-Symbol angeklickt wird
     });
 
     document.getElementById('aufdruckInfo').addEventListener('mouseover', function () {
         /**
          * Event-Listener für das Mouseover-Ereignis
          */
-        showPopup();
+        showPopup(); // Zeige das Pop-up-Feld an, wenn der Mauszeiger über dem Info-Symbol ist
+    });
+
+    document.getElementById('aufdruckInfo').addEventListener('touchstart', function () {
+        /**
+         * Event-Listener für das Touchstart-Ereignis
+         */
+        showPopup(); // Zeige das Pop-up-Feld an, wenn das Info-Symbol berührt wird
     });
 
     document.addEventListener('click', function (event) {
