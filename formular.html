@@ -33,7 +33,7 @@
         /* Container für den gesamten Inhalt */
         .container {
             max-width: 100%; /* Maximalbreite des Containers */
-            height: 556px; /* Höhe des Containers */
+            height: fit-content; /* Höhe des Containers */
             margin: 0 auto; /* Zentriert auf der Seite */
             border-radius: 10px; /* Abgerundete Ecken */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Schatten */
@@ -171,6 +171,13 @@
             display: none;
         }
 
+        /* Styling für die verfügbaren Nummern */
+        #verfuegbare-nummern {
+            display: none;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: var(--primary-color);
+        }
 
         /* Media Query für kleinere Bildschirme */
         @media screen and (max-width: 600px) {
@@ -183,7 +190,8 @@
             }
 
             .container {
-                padding: 10px; /* Weniger Innenabstand */
+                /* Weniger Innenabstand */
+                padding: 10px 10px 20px;
             }
         }
 
@@ -244,6 +252,10 @@
             <input type="tel" id="nummer" name="nummer" required>
             <span id="nummerStatus" class="nummer-status"></span>
         </div>
+
+        <!-- Anzeige für verfügbare Nummern -->
+        <div id="verfuegbare-nummern"><span id="availableNumbers"></span></div>
+
 
         <label for="aufdruck" class="optional">
             Aufdruck (optional)
@@ -343,6 +355,10 @@
         let successMessageDiv = document.getElementById('successMessage'); // Erfolgsmeldung
         let errorMessageDiv = document.getElementById('errorMessage'); // Fehlermeldung
         let form = document.getElementById('form'); // Formular
+        let formContainer = document.querySelector('.container'); // Container-Element
+
+        // Setze die Höhe des Containers auf die gespeicherte Höhe, um ein Zusammenziehen zu verhindern
+        formContainer.style.height = formContainer.offsetHeight + 'px';
 
         // Überprüfe, ob die Nummer verfügbar ist
         let nummerInput = document.getElementById('nummer');
@@ -394,7 +410,8 @@
 
         // Wenn keine Nummer eingegeben wurde, zeige gar nichts an
         if (nummer === '') {
-            nummerStatus.innerHTML = '';
+            nummerStatus.innerHTML = ''; // Setze den Inhalt auf nichts
+            document.getElementById('verfuegbare-nummern').style.display = 'none'; // Blende die verfügbaren Nummern aus
             return;
         }
 
@@ -402,10 +419,12 @@
             nummerStatus.innerHTML = '&#10007;'; // Zeige ein Kreuz an, um zu zeigen, dass die Nummer nicht verfügbar ist
             nummerInput.classList.add('error'); // Füge die Klasse 'error' hinzu
             nummerStatus.style.color = 'red'; // Setze die Farbe auf Rot
+            document.getElementById('verfuegbare-nummern').style.display = 'block'; // Blende die verfügbaren Nummern ein
         } else {
             nummerStatus.innerHTML = '&#10003;'; // Zeige einen Haken an, um zu zeigen, dass die Nummer verfügbar ist
             nummerInput.classList.remove('error'); // Entferne die Klasse 'error'
             nummerStatus.style.color = 'green'; // Setze die Farbe auf Grün
+            document.getElementById('verfuegbare-nummern').style.display = 'none'; // Blende die verfügbaren Nummern aus
             document.getElementById('errorMessage').style.display = 'none'; // Fehlermeldung ausblenden
         }
     });
@@ -416,8 +435,8 @@
          * legitime Nummer handelt
          * @param number die eingegebene Nummer
          */
-        if (!isNaN(number) && number.toString().length <= 3) {
-            return usedNumbers.includes(number); // Return false, wenn die Nummer verfügbar und legitim ist
+        if (!isNaN(number) && number.toString().length <= 2 && !usedNumbers.includes(number) && !number.startsWith('0')) {
+            return false; // Return false, wenn die Nummer verfügbar und legitim ist
         } else {
             return true; // Return true, wenn die Nummer bereits verwendet wurde oder ungültig ist
         }
@@ -453,12 +472,28 @@
         // Warte auf das Ende aller Fetch-Requests
         Promise.all(fetchPromises)
             .then(() => {
+                // Logge die erfolgreiche Übermittlung
                 console.log('Die Daten wurden erfolgreich geladen');
                 console.log('Die geladenen Zahlen sind:', usedNumbers);
+                // Aktualisiere die verfügbaren Nummern
+                updateAvailableNumbers();
             })
             .catch(error => console.error('Fehler beim Laden der Daten:', error));
     }
 
+    function updateAvailableNumbers() {
+        /**
+         * Aktualisiert die verfügbaren Nummern
+         */
+        let availableNumbersSpan = document.getElementById('availableNumbers');
+        let availableNumbers = [];
+        for (let i = 1; i <= 99; i++) {
+            if (!usedNumbers.includes(i.toString())) {
+                availableNumbers.push(i);
+            }
+        }
+        availableNumbersSpan.textContent = 'Verfügbare Nummern: ' + availableNumbers.join(', ');
+    }
 
     // Speichert die bisher verwendeten Nummern
     let usedNumbers = [];
