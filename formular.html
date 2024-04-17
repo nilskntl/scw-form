@@ -323,7 +323,9 @@
         errorMessageDiv.style.display = 'none'; // Fehlermeldung ausblenden
         form.style.display = 'none'; // Formular ausblenden
 
-        xhr.open('POST', 'https://script.google.com/macros/s/AKfycbxXfCRP4KVeRWsxsmDSanWi7DsgqmgLx8-dUQa1h_DxXeQ7lzzlsqrpkncgbnD3MOSIxQ/exec', true);
+        // Sende die Daten an das Google-Script
+        xhr.open('POST', 'https://script.google.com/macros/s/AKfycbz20ulEpPPKLAey67DfaMRlyLeAlY21Gm1VaLuHpuK7n2yl3KZGqlg3JCjG80MJS9Gi/exec', true);
+        // Während des Ladevorgangs
         xhr.onload = function () {
             loadingDiv.style.display = 'none'; // Ladekreis ausblenden
             if (xhr.status >= 200 && xhr.status < 300) {
@@ -334,6 +336,7 @@
                 console.error('Fehler beim Übermitteln des Formulars.'); // Logge den Fehler
             }
         };
+        // Bei einem Fehler
         xhr.onerror = function () {
             loadingDiv.style.display = 'none'; // Ladekreis ausblenden
             errorMessageDiv.style.display = 'block'; // Fehlermeldung anzeigen
