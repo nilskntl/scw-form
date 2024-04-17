@@ -300,6 +300,17 @@
         if (!event.target.matches('#aufdruckInfo')) {
             popup.style.display = 'none';
         }
+        // Zeige den Rand eines Feldes in Schwarz an, wenn drüber gehovert wird
+        if (event.target.matches('input[type="text"], input[type="email"], input[type="tel"], select')) {
+            event.target.style.border = '1px solid var(--black-color)';
+        }
+        // Verstecke den Rand eines Feldes, wenn nicht mehr drüber gehovert wird
+        if (!event.target.matches('input[type="text"], input[type="email"], input[type="tel"], select')) {
+            // Setze für alle Felder den Rand auf die Standardfarbe
+            document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], select').forEach(input => {
+                input.style.border = '1px solid var(--grey-color)';
+            });
+        }
     });
 
     document.getElementById('form').addEventListener('submit', function (event) {
