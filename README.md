@@ -9,4 +9,4 @@ Einfaches Online-Formular für die Shirt-Bestellungen des SCW.
 
 
 ### Verfügbarkeit
-Das Online-Formular ist unter wsg-wunstorf.de/scw verfügbar.
+Das Online-Formular ist unter https://wsg-wunstorf.de/scw verfügbar.
