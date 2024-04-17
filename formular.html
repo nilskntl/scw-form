@@ -3,32 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formular</title>
+    <title>SCW Shirt-Bestellung</title>
     <style>
 
         /* Definiere Farben */
         :root {
-            --primary-color: #4992c7; /* Blau */
+            --primary-color: #ff0024; /* SCW Rot */
             --background-color: #f0f8ff; /* Hintergrundfarbe */
             --grey-color: #cccccc; /* Grau */
             --light-grey-color: #f3f3f3; /* Hellgrau */
             --form-color: #ffffff; /* Formularfarbe */
             --text-color: #000000; /* Textfarbe */
             --success-color: #28a745; /* Grün */
-            --red-color: #dc3545; /* Rot */
+            --red-color: #ff0024; /* Rot */
         }
 
         /* Globale Einstellungen */
         body {
-            background-color: var(--background-color); /* Hintergrundfarbe */
             font-family: Arial, sans-serif; /* Schriftart auf Arial setzen */
             padding: 20px; /* Abstand zur Seite */
         }
 
         /* Container für den gesamten Inhalt */
         .container {
-            max-width: 600px; /* Maximalbreite des Containers */
-            height: 800px; /* Höhe des Containers */
+            max-width: 100%; /* Maximalbreite des Containers */
+            height: 472px; /* Höhe des Containers */
             margin: 0 auto; /* Zentriert auf der Seite */
             border-radius: 10px; /* Abgerundete Ecken */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Schatten */
@@ -82,7 +81,7 @@
         /* Design für den Senden-Button beim Hovern */
         input[type="submit"]:hover {
             /* Wähle als Hintergrundfarbe eine leicht dunklere als die primary */
-            background-color: #3a7ca6;
+            background-color: #d9001b;
         }
 
         /* Design für Felder, wenn diese ausgewählt sind */
@@ -128,12 +127,28 @@
             width: 100%; /* Volle Breite des Containers */
         }
 
+        /* Flexbox für Vorname und Nachname */
+        .name-container, .auswahl-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Styling für Vorname und Nachname Labels */
+        .name-container label, .auswahl-container label {
+            width: calc(50% - 5px);
+        }
+
+        /* Styling für Vorname und Nachname Inputfelder */
+        .name-container input, .auswahl-container select {
+            width: calc(50% - 5px);
+        }
+
     </style>
 </head>
 <body>
 <div class="container">
     <div id="header">
-        <h1>Basketballshirts</h1>
+        <h1>SCW Shirt-Bestellung</h1>
         <hr id="spacer">
     </div>
     <div id="loading"
@@ -148,31 +163,37 @@
         <div>Bitte warten...</div>
     </div>
     <form id="form" action="#" method="post">
-        <label for="vorname" class="required">Vorname</label>
-        <input type="text" id="vorname" name="vorname" required><br>
-
-        <label for="nachname" class="required">Nachname</label>
-        <input type="text" id="nachname" name="nachname" required><br>
+        <div class="name-container">
+            <label for="vorname" class="required">Vorname</label>
+            <label for="nachname" class="required">Nachname</label>
+        </div>
+        <div class="name-container">
+            <input type="text" id="vorname" name="vorname" required>
+            <input type="text" id="nachname" name="nachname" required>
+        </div>
 
         <label for="email" class="required">E-Mail</label>
         <input type="email" id="email" name="email" required><br>
 
-        <label for="geschlecht" class="required">Geschlecht</label>
-        <select id="geschlecht" name="geschlecht" required>
-            <option value="W" selected>Weiblich</option>
-            <option value="M">Männlich</option>
-            <option value="D">Divers</option>
-        </select><br>
-
-        <label for="groesse" class="required">Größe</label>
-        <select id="groesse" name="groesse" required>
-            <option value="XS">XS</option>
-            <option value="S">S</option>
-            <option value="M" selected>M</option>
-            <option value="L">L</option>
-            <option value="XL">XL</option>
-            <option value="XXL">XXL</option>
-        </select><br>
+        <div class="auswahl-container">
+            <label for="geschlecht" class="required">Geschlecht</label>
+            <label for="groesse" class="required">Größe</label>
+        </div>
+        <div class="auswahl-container">
+            <select id="geschlecht" name="geschlecht" required>
+                <option value="W" selected>Weiblich</option>
+                <option value="M">Männlich</option>
+                <option value="D">Divers</option>
+            </select>
+            <select id="groesse" name="groesse" required>
+                <option value="XS">XS</option>
+                <option value="S">S</option>
+                <option value="M" selected>M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+        </div>
 
         <label for="nummer" class="required">Nummer</label>
         <div style="position: relative;">
@@ -205,9 +226,8 @@
         let nummerInput = document.getElementById('nummer');
         let nummer = nummerInput.value.trim();
         if (checkNumberAvailability(nummer)) {
-            // Nummer nicht verfügbar, Formular nicht senden
-            errorMessageDiv.style.display = 'block'; // Fehlermeldung anzeigen
-            errorMessageDiv.innerText = 'Nummer ist bereits vergeben oder ungültig'; // Fehlermeldung setzen
+            // Färbe die Border des Nummernfeldes rot
+            nummerInput.style.border = '2px solid var(--red-color)';
             return;
         }
 
