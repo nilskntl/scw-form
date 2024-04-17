@@ -17,6 +17,7 @@
             --success-color: #28a745; /* Grün */
             --red-color: #ff0024; /* Rot */
             --white-color: #ffffff; /* Weiß */
+            --black-color: #000000; /* Schwarz */
         }
 
         /* Globale Einstellungen */
@@ -279,16 +280,22 @@
         showPopup();
     });
 
-    // Hide popup when clicking somewhere else
     document.addEventListener('click', function (event) {
+        /**
+         * Event-Listener für das Klick-Ereignis
+         * Verstecke das Pop-up-Feld, wenn der Mauszeiger nicht über dem Info-Symbol ist
+         */
         let popup = document.getElementById('aufdruckPopup');
         if (!event.target.matches('#aufdruckInfo')) {
             popup.style.display = 'none';
         }
     });
 
-    // Hide popup when hovering somewhere else
     document.addEventListener('mouseover', function (event) {
+        /**
+         * Event-Listener für das Mouseover-Ereignis
+         */
+            // Verstecke das Pop-up-Feld, wenn der Mauszeiger nicht über dem Info-Symbol ist
         let popup = document.getElementById('aufdruckPopup');
         if (!event.target.matches('#aufdruckInfo')) {
             popup.style.display = 'none';
