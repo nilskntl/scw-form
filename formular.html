@@ -15,7 +15,6 @@
             --form-color: #ffffff; /* Formularfarbe */
             --text-color: #000000; /* Textfarbe */
             --success-color: #28a745; /* Grün */
-            --red-color: #ff0024; /* Rot */
             --white-color: #ffffff; /* Weiß */
             --black-color: #000000; /* Schwarz */
         }
@@ -69,6 +68,7 @@
             box-sizing: border-box;
             position: relative;
             background: var(--light-grey-color);
+            color: var(--text-color);
         }
 
         /* Design für den Senden-Button */
@@ -90,6 +90,14 @@
             background-color: #d9001b;
         }
 
+        /* Design für die Felder, beim Hovern */
+        input[type="text"]:hover,
+        input[type="email"]:hover,
+        input[type="tel"]:hover,
+        select:hover{
+            border: 1px solid var(--black-color);
+        }
+
         /* Design für Felder, wenn diese ausgewählt sind */
         input:focus {
             border: 2px solid var(--primary-color); /* Border */
@@ -98,7 +106,7 @@
         /* Ergänze rotes Sternchen für Pflichtfelder */
         label.required:after {
             content: " *";
-            color: var(--red-color);
+            color: var(--primary-color);
         }
 
         /* Header-Design */
@@ -157,7 +165,6 @@
             user-select: none; /* Standard */
             -webkit-touch-callout: none; /* Safari */
         }
-
 
         /* Styling für das Pop-up-Feld */
         .popup {
@@ -356,17 +363,6 @@
         let popup = document.getElementById('aufdruckPopup');
         if (!event.target.matches('#aufdruckInfo')) {
             popup.style.display = 'none';
-        }
-        // Zeige den Rand eines Feldes in Schwarz an, wenn darüber gehovert wird
-        if (event.target.matches('input[type="text"], input[type="email"], input[type="tel"], select')) {
-            event.target.style.border = '1px solid var(--black-color)';
-        }
-        // Verstecke den Rand eines Feldes, wenn nicht mehr darüber gehovert wird
-        if (!event.target.matches('input[type="text"], input[type="email"], input[type="tel"], select')) {
-            // Setze für alle Felder den Rand auf die Standardfarbe
-            document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], select').forEach(input => {
-                input.style.border = '1px solid var(--grey-color)';
-            });
         }
     });
 
