@@ -409,17 +409,17 @@
         let form = document.getElementById('form'); // Formular
         let formContainer = document.getElementById('containerAll'); // Container
 
-        // Setze die Höhe des Containers auf die gespeicherte Höhe, um ein Zusammenziehen zu verhindern
-        formContainer.style.height = formContainer.offsetHeight + 'px';
-
         // Überprüfe, ob die Nummer verfügbar ist
         let nummerInput = document.getElementById('nummer');
         let nummer = nummerInput.value.trim();
         if (checkNumberAvailability(nummer)) {
             // Färbe die Border des Nummernfeldes rot
-            nummerInput.style.border = '2px solid var(--red-color)';
+            nummerInput.style.border = '2px solid var(--primary-color)';
             return;
         }
+
+        // Setze die Höhe des Containers auf die gespeicherte Höhe, um ein Zusammenziehen zu verhindern
+        formContainer.style.height = formContainer.offsetHeight + 'px';
 
         loadingDiv.style.display = 'block'; // Ladekreis anzeigen
         successMessageDiv.style.display = 'none'; // Erfolgsmeldung ausblenden
