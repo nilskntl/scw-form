@@ -476,6 +476,7 @@
             nummerStatus.innerHTML = '&#10003;'; // Zeige einen Haken an, um zu zeigen, dass die Nummer verfügbar ist
             nummerInput.classList.remove('error'); // Entferne die Klasse 'error'
             nummerStatus.style.color = 'var(--success-color)'; // Setze die Farbe auf Grün
+            nummerStatus.style.border = '1px solid var(--grey-color)'; // Setze die Borderfarbe zurück auf Grau
             document.getElementById('verfuegbareNummern').style.display = 'none'; // Blende die verfügbaren Nummern aus
             document.getElementById('errorMessage').style.display = 'none'; // Fehlermeldung ausblenden
         }
