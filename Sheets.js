@@ -11,7 +11,7 @@ function doPost(e) {
     // Überprüfen, ob die Nummer bereits vorhanden ist
     let data = numbersSheet.getRange('A:A').getValues(); // Spalte mit den Nummern auslesen
     for (let i = 0; i < data.length; i++) {
-        if (data[i][0] === nummer) {
+        if (data[i][0].toString() === nummer.toString()) {
             // Nummer wird bereits verwendet
             // Fehlermeldung zurückgeben
             throw new Error("Die Nummer ist bereits vorhanden.");
@@ -25,12 +25,12 @@ function doPost(e) {
     rowData.push(new Date());
 
     // Daten aus dem Formular hinzufügen
-    rowData.push(e.parameter.vorname);
-    rowData.push(e.parameter.nachname);
-    rowData.push(e.parameter.email);
-    rowData.push(e.parameter.nummer);
-    rowData.push(e.parameter.groesse);
-    rowData.push(e.parameter.geschlecht);
+    rowData.push(e.parameter.vorname); // Vorname
+    rowData.push(e.parameter.nachname); // Nachname
+    rowData.push(e.parameter.email); // E-Mail Adresse
+    rowData.push(e.parameter.nummer); // Trikotnummer
+    rowData.push(e.parameter.groesse); // Größe des Shirts
+    rowData.push(e.parameter.geschlecht); // Geschlecht
 
     // Überprüfen, ob ein Aufdruck angegeben wurde
     if (e.parameter.aufdruck === null || e.parameter.aufdruck === '') {
@@ -38,6 +38,8 @@ function doPost(e) {
     } else {
         rowData.push(e.parameter.aufdruck); // Wenn ein Aufdruck angegeben wurde, diesen verwenden
     }
+
+    rowData.push(e.parameter.anzahl); // Anzahl der Shirts
 
     // Daten in die Tabelle einfügen
     fullSheet.appendRow(rowData);
