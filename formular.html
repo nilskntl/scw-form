@@ -470,12 +470,12 @@
         if (checkNumberAvailability(nummer)) {
             nummerStatus.innerHTML = '&#10007;'; // Zeige ein Kreuz an, um zu zeigen, dass die Nummer nicht verfügbar ist
             nummerInput.classList.add('error'); // Füge die Klasse 'error' hinzu
-            nummerStatus.style.color = 'red'; // Setze die Farbe auf Rot
+            nummerStatus.style.color = 'var(--primary-color)'; // Setze die Farbe auf Rot
             document.getElementById('verfuegbareNummern').style.display = 'block'; // Blende die verfügbaren Nummern ein
         } else {
             nummerStatus.innerHTML = '&#10003;'; // Zeige einen Haken an, um zu zeigen, dass die Nummer verfügbar ist
             nummerInput.classList.remove('error'); // Entferne die Klasse 'error'
-            nummerStatus.style.color = 'green'; // Setze die Farbe auf Grün
+            nummerStatus.style.color = 'var(--success-color)'; // Setze die Farbe auf Grün
             document.getElementById('verfuegbareNummern').style.display = 'none'; // Blende die verfügbaren Nummern aus
             document.getElementById('errorMessage').style.display = 'none'; // Fehlermeldung ausblenden
         }
