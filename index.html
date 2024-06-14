@@ -27,24 +27,28 @@ Nutzung:
 <iframe id="contentFrame" style="width: 100%; height: 100%; border: none"></iframe>
 <script>
 
-    /**
-     * Lädt den HTML-Code zum Einbinden
-     */
-    try {
-        let response = await fetch('https://raw.githubusercontent.com/nilskntl/scw-shirts/master/src/index.html');
-        if (response.ok) {
-            let htmlContent = await response.text();
-            let frame = document.getElementById('contentFrame');
-            let doc = frame.contentDocument || frame.contentWindow.document;
-            doc.open();
-            doc.write(htmlContent);
-            doc.close();
-        } else {
-            console.error('Failed to load html content');
+    async function loadHtml() {
+        /**
+         * Lädt den HTML-Code zum Einbinden
+         */
+        try {
+            let response = await fetch('https://raw.githubusercontent.com/nilskntl/scw-shirts/master/src/index.html');
+            if (response.ok) {
+                let htmlContent = await response.text();
+                let frame = document.getElementById('contentFrame');
+                let doc = frame.contentDocument || frame.contentWindow.document;
+                doc.open();
+                doc.write(htmlContent);
+                doc.close();
+            } else {
+                console.error('Failed to load html content');
+            }
+        } catch (error) {
+            console.error('There has been a problem with your fetch operation:', error);
         }
-    } catch (error) {
-        console.error('There has been a problem with your fetch operation:', error);
     }
+
+    loadHtml();
 </script>
 </body>
 </html>
