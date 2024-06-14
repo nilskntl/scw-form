@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SCW Formular</title>
+    <style>
+        /* Definiere Farben */
+        :root {
+            --primary-color: #ff0024; /* SCW Rot */
+            --background-color: #ffffff; /* Hintergrundfarbe */
+            --grey-color: #cccccc; /* Grau */
+            --light-grey-color: #f3f3f3; /* Hellgrau */
+            --dark-grey-color: #666666; /* Dunkelgrau */
+            --text-color: #000000; /* Textfarbe */
+            --success-color: #28a745; /* Grün */
+            --black-color: #000000; /* Schwarz */
+            --padding: 8px; /* Padding */
+            --transition-duration: 0.3s; /* Übergangsdauer */
+        }
+
+        /* Globale Einstellungen */
+        body {
+            font-family: Arial, sans-serif; /* Schriftart auf Arial setzen */
+            font-size: 12px; /* Schriftgröße */
+            font-weight: normal; /* Schriftgewicht */
+            color: var(--text-color); /* Textfarbe */
+            background-color: var(--background-color); /* Hintergrundfarbe */
+            padding: 8px; /* Abstand zur Seite */
+            margin: 0; /* Rand */
+        }
+
+        .dotted-line {
+            border: none;
+            border-top: 1px dotted var(--primary-color);
+            margin: 32px 0 32px 0; /* Optionaler Abstand nach oben und unten */
+            width: calc(100% - 32px);
+        }
+
+        #form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%; /* Breite des Containers */
+            max-width: 100%; /* Maximalbreite des Containers */
+            height: fit-content; /* Höhe des Containers */
+            margin: 0 auto; /* Zentriert auf der Seite */
+            background-color: var(--background-color); /* Hintergrundfarbe */
+            padding: var(--padding); /* Padding */
+            border-radius: 16px; /* Runde Ecken */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Schatten */
+        }
+
+        #form-header {
+            display: flex;
+            gap: 8px;
+            justify-content: left;
+            align-items: center;
+            background-color: var(--primary-color);
+            border-top-right-radius: 16px;
+            border-top-left-radius: 16px;
+            padding: 8px 8px 8px 16px;
+        }
+
+        #form-header-text {
+            font-size: 24px;
+            color: var(--background-color);
+            font-weight: bold;
+        }
+
+        #scw-icon {
+            width: 64px;
+            height: 64px;
+        }
+
+        .form-select-type__item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            padding: 16px;
+            border: 2px solid var(--grey-color);
+            transition: border-color var(--transition-duration), background-color var(--transition-duration);
+        }
+
+        .form-select-type__item:hover {
+            background-color: var(--light-grey-color);
+        }
+
+        .form-select-type__item:hover .form-select-type__item-image {
+            width: 75%;
+            height: 75%;
+        }
+
+        .form-select-type__item-selected {
+            border-color: var(--primary-color);
+        }
+
+        .form-select-type__item-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: width var(--transition-duration), height var(--transition-duration);
+        }
+
+        #form-body {
+            padding: 16px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* Stil für den Ladekreis */
+        #loading-circle {
+            display: none;
+            text-align: center;
+            position: relative;
+            left: 50%;
+            top: 64px;
+            transform: translate(-50%, -50%);
+        }
+
+        .status-message {
+            text-align: center;
+            position: relative;
+            left: 50%;
+            top: 64px;
+            transform: translate(-50%, -50%);
+        }
+
+        #successMessage,
+        #errorMessage {
+            display: none;
+        }
+
+        #successMessage {
+            color: var(--success-color);
+        }
+
+        #errorMessage {
+            color: var(--primary-color);
+        }
+
+        /* Positionierung für das Nummernstatus-Span-Element */
+        #nummerStatus {
+            font-size: 20px;
+            position: absolute;
+            top: 488px;
+            right: 20px;
+            transform: translateY(calc(-50% - 4px));
+        }
+
+        /* Design für das Formular */
+        form {
+            max-width: 100%;
+            color: var(--text-color); /* Textfarbe */
+            accent-color: var(--primary-color); /* Akzentfarbe */
+        }
+
+        .form-field-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-label {
+            width: 20%;
+            text-align: left;
+            color: var(--dark-grey-color);
+        }
+
+        .form-input {
+            width: calc(80% - 32px);
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Design für die Felder */
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            padding-left: 8px;
+            flex: 1;
+            height: 42px;
+            margin-bottom: 15px;
+            border: 1px solid var(--grey-color);
+            border-radius: 5px;
+            box-sizing: border-box;
+            position: relative;
+            background: var(--light-grey-color);
+            color: var(--text-color);
+            font-size: 14px;
+        }
+
+        /* Design für den Senden-Button */
+        input[type="submit"] {
+            width: calc(100% - 32px);
+            padding: 10px; /* Abstand zur Seite */
+            background-color: var(--primary-color); /* Hintergrundfarbe */
+            border: none; /* Border */
+            color: var(--background-color); /* Textfarbe */
+            border-radius: 5px; /* Border-Radius */
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 32px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Schatten */
+        }
+
+        /* Design für den Senden-Button beim Hovern */
+        input[type="submit"]:hover {
+            /* Wähle als Hintergrundfarbe eine leicht dunklere als die primary */
+            background-color: #d9001b;
+            transition: background-color 0.5s ease; /* Übergangseffekt */
+        }
+
+        /* Design für die Felder, beim Hovern */
+        input[type="text"]:hover,
+        input[type="email"]:hover,
+        input[type="tel"]:hover,
+        select:hover {
+            border: 1px solid var(--black-color);
+            transition: border-color 0.5s ease; /* Übergangseffekt */
+        }
+
+        /* Design für Felder, wenn diese ausgewählt sind */
+        input:focus, select:focus {
+            border: 2px solid var(--black-color); /* Border */
+        }
+
+        /* Ergänze rotes Sternchen für Pflichtfelder */
+        .required:after {
+            content: " *";
+            color: var(--primary-color);
+        }
+
+        #availableNumbers {
+            display: none;
+            margin-bottom: 16px;
+        }
+
+        #availableNumbersSpan {
+            color: var(--primary-color);
+        }
+
+    </style>
+</head>
+<body>
+<div id="form-container">
+    <div id="form-header">
+        <img id="scw-icon"
+             src="https://raw.githubusercontent.com/nilskntl/scw-shirts/master/src/assets/scw_icon_128.png"
+             alt="SCW Icon">
+        <span id="form-header-text">
+            Bestellformular
+        </span>
+    </div>
+    <div id="form-body">
+        <!-- Ladekreis -->
+        <div id="loading-circle">
+            <svg width="50px" height="50px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                <circle cx="50" cy="50" fill="none" stroke="#007bff" stroke-width="8" r="35"
+                        stroke-dasharray="164.93361431346415 56.97787143782138">
+                    <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s"
+                                      values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+                </circle>
+            </svg>
+            <div>Bitte warten...</div>
+        </div>
+        <!-- Erfolgsmeldung und Fehlermeldung -->
+        <div id="successMessage" class="status-message">Erfolgreich gesendet!</div>
+        <div id="errorMessage" class="status-message">Fehler beim Senden des Formulars. Bitte versuche es erneut.</div>
+        <!-- Formular -->
+        <form id="form" action="#" method="post">
+            <div id="form-product-type container" class="form-field-container">
+                <div class="form-label required">
+                    Wähle ein Produkt aus:
+                </div>
+                <div class="form-input">
+                    <div id="form-select-type-shirt" class="form-select-type__item form-select-type__item-selected">
+                        <img class="form-select-type__item-image"
+                             src="https://raw.githubusercontent.com/nilskntl/scw-shirts/master/src/assets/shirt_128.png"
+                             alt="SCW Icon">
+                    </div>
+                    <div id="form-select-type-cap" class="form-select-type__item">
+                        <img class="form-select-type__item-image"
+                             src="https://raw.githubusercontent.com/nilskntl/scw-shirts/master/src/assets/swim_cap_128.png"
+                             alt="SCW Icon">
+                    </div>
+                </div>
+            </div>
+            <div class="form-spacer" id="form-spacer">
+                <hr class="dotted-line">
+            </div>
+            <!-- Vorname und Nachname -->
+            <div id="form-fist-name-container" class="form-field-container">
+                <div class="form-label required">
+                    Dein Name
+                </div>
+                <div class="form-input">
+                    <input type="text" name="vorname" required placeholder="Vorname">
+                    <input type="text" name="nachname" required placeholder="Nachname">
+                </div>
+            </div>
+            <!-- E-Mail -->
+            <div id="form-email-container" class="form-field-container">
+                <div class="form-label required">
+                    Deine E-Mail
+                </div>
+                <div class="form-input">
+                    <input type="email" name="email" required placeholder="E-Mail-Adresse">
+                </div>
+            </div>
+            <!-- Bestelldetails -->
+            <div id="form-details-shirt-container" class="form-field-container">
+                <div class="form-label required">
+                    Bestelldetails
+                </div>
+                <div class="form-input">
+                    <select id="geschlecht" name="geschlecht" required>
+                        <option value="" disabled selected hidden>Geschlecht</option>
+                        <option value="W">Weiblich</option>
+                        <option value="M">Männlich</option>
+                        <option value="D">Divers</option>
+                    </select>
+                    <select id="groesse" name="groesse" required>
+                        <option value="" disabled selected hidden>Größe</option>
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
+                    </select>
+                    <select id="anzahl" name="anzahl" required>
+                        <option value="" disabled selected hidden>Anzahl</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Badekappen-Art -->
+            <div id="form-details-cap-container" class="form-field-container" style="display: none">
+                <div class="form-label required">
+                    Bestelldetails
+                </div>
+                <div class="form-input">
+                    <select id="badekappe" name="badekappe">
+                        <option value="" disabled selected hidden>Wähle die Art der Badekappe</option>
+                        <option value="normal">Normal (15€)</option>
+                        <option value="aquaforce">Aquaforce (45€)</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Mehr Infos (Links) zu Badekappen Art -->
+            <div id="form-cap-more-info-1" class="form-field-container" style="display: none">
+                <div class="form-label">
+                </div>
+                <div class="form-input">
+                    <a>Link zur normalen Kappe</a>
+                </div>
+            </div>
+            <div id="form-cap-more-info-2" class="form-field-container" style="display: none">
+                <div class="form-label">
+                </div>
+                <div class="form-input">
+                    <a>Link zur aquaforce Kappe</a>
+                </div>
+            </div>
+            <!-- Nummer -->
+            <div id="form-number-container" class="form-field-container">
+                <div class="form-label required">
+                    Deine Nummer
+                </div>
+                <div class="form-input">
+                    <!-- Nummern-Feld -->
+                    <input type="tel" id="nummer" name="nummer" required placeholder="1 - 99">
+                    <!-- Status der Nummer. Zeigt an, ob die Nummer verfügbar ist oder nicht -->
+                    <span id="nummerStatus" class="nummer-status"></span>
+                </div>
+            </div>
+            <div id="form-available-numbers-text" class="form-field-container">
+                <div class="form-label">
+                </div>
+                <div class="form-input">
+                    <!-- Anzeige für verfügbare Nummern -->
+                    <div id="availableNumbers"><span id="availableNumbersSpan"></span></div>
+                </div>
+            </div>
+
+            <!-- Aufdruck -->
+            <div id="form-shirt-print-container" class="form-field-container">
+                <div class="form-label">
+                    Aufdruck (optional)
+                </div>
+                <div class="form-input">
+                    <input type="text" name="aufdruck" placeholder="Standard: Nachname">
+                </div>
+            </div>
+
+            <!-- Senden-Button -->
+            <input type="submit" value="Senden">
+        </form>
+    </div>
+</div>
+<script>
+    function init() {
+        /**
+         * Initiate all functions
+         */
+        createListeners();
+        fetchUsedNumbers();
+    }
+
+    function createListeners() {
+        /**
+         * Create all listeners that are needed for functionality
+         */
+
+        const selectTypeItems = document.querySelectorAll('.form-select-type__item');
+        const shirtElements = {
+            detailsShirt: document.getElementById('form-details-shirt-container'),
+            number: document.getElementById('form-number-container'),
+            availableNumbersText: document.getElementById('form-available-numbers-text'),
+            shirtPrint: document.getElementById('form-shirt-print-container')
+        }
+        const capElements = {
+            detailsCap: document.getElementById('form-details-cap-container'),
+            moreInfo1: document.getElementById('form-cap-more-info-1'),
+            moreInfo2: document.getElementById('form-cap-more-info-2')
+        }
+
+        const shirtFieldsRequired = {
+            gender: document.getElementById('geschlecht'),
+            size: document.getElementById('groesse'),
+            count: document.getElementById('anzahl'),
+            nummer: document.getElementById('nummer')
+        }
+
+        const capFieldsRequired = {
+            type: document.getElementById('badekappe'),
+        }
+
+
+        // Loop through each select type item
+        selectTypeItems.forEach((selectTypeItem) => {
+            // Add a click event listener to each select type item
+            selectTypeItem.addEventListener('click', () => {
+                // If the class "form-select-type__item-selected" is not present in the current select type item
+                // then remove the class from all select type items and add it to the current select type item
+                if (!selectTypeItem.classList.contains('form-select-type__item-selected')) {
+                    selectTypeItems.forEach((item) => {
+                        item.classList.remove('form-select-type__item-selected');
+                    });
+                    let type = 'shirt';
+                    if (!selectTypeItem.id.endsWith('shirt')) type = 'cap';
+
+                    if (type === 'cap') {
+                        for (let element in shirtElements) {
+                            shirtElements[element].style.display = 'none';
+                        }
+                        for (let element in shirtFieldsRequired) {
+                            shirtFieldsRequired[element].removeAttribute('required');
+                        }
+                        for (let element in capElements) {
+                            capElements[element].style.display = 'flex';
+                        }
+                        for (let element in capFieldsRequired) {
+                            capFieldsRequired[element].setAttribute('required', '');
+                        }
+                    } else {
+                        for (let element in capElements) {
+                            capElements[element].style.display = 'none';
+                        }
+                        for (let element in capFieldsRequired) {
+                            capFieldsRequired[element].removeAttribute('required');
+                        }
+                        for (let element in shirtElements) {
+                            shirtElements[element].style.display = 'flex';
+                        }
+                        for (let element in shirtFieldsRequired) {
+                            shirtFieldsRequired[element].setAttribute('required', '');
+                        }
+                    }
+
+                    selectTypeItem.classList.add('form-select-type__item-selected');
+                }
+            });
+        });
+
+        document.getElementById('form').addEventListener('submit', function (event) {
+            /**
+             * Event-Listener für den Senden-Button
+             * @type {HTMLElement | *}
+             */
+            event.preventDefault(); // Verhindert das Standardverhalten des Formulars (Seitenwechsel)
+
+            let formData = new FormData(this); // Formular-Eingaben
+
+            // Setze die Art der Bestellung (Badekappe / Shirt)
+            let type = 'shirt';
+            selectTypeItems.forEach((selectTypeItem) => {
+                if (selectTypeItem.classList.contains('form-select-type__item-selected')) {
+                    if (selectTypeItem.id.endsWith('shirt')) {
+                        type = 'shirt';
+                    } else {
+                        type = 'badekappe';
+                    }
+                }
+            });
+
+            console.log(type);
+            formData.set('bestellung', type);
+
+            let xhr = new XMLHttpRequest(); // XMLHttpRequest-Objekt
+            let loadingDiv = document.getElementById('loading-circle'); // Ladekreis
+            let successMessageDiv = document.getElementById('successMessage'); // Erfolgsmeldung
+            let errorMessageDiv = document.getElementById('errorMessage'); // Fehlermeldung
+            let form = document.getElementById('form'); // Formular
+            let formContainer = document.getElementById('form-container'); // Container
+
+            // Überprüfe, ob die Nummer verfügbar ist
+            let nummerInput = document.getElementById('nummer');
+            let nummer = nummerInput.value.trim();
+            if (checkNumberAvailability(nummer)) {
+                // Färbe die Border des Nummernfeldes rot
+                nummerInput.style.border = '2px solid var(--primary-color)';
+                return;
+            }
+
+            // Setze die Höhe des Containers auf die gespeicherte Höhe, um ein Zusammenziehen zu verhindern
+            formContainer.style.height = formContainer.offsetHeight + 'px';
+
+            loadingDiv.style.display = 'block'; // Ladekreis anzeigen
+            successMessageDiv.style.display = 'none'; // Erfolgsmeldung ausblenden
+            errorMessageDiv.style.display = 'none'; // Fehlermeldung ausblenden
+            form.style.display = 'none'; // Formular ausblenden
+
+            // Sende die Daten an das Google-Script
+            xhr.open('POST', 'https://script.google.com/macros/s/AKfycbzrpOFmJKfiNxkMpkOgV-nFsA8jgKHFAFoFUcjgPm2rJ3quKcN15sci3nMK57gb-hpkyA/exec', true);
+            // Während des Ladevorgangs
+            xhr.onload = function () {
+                loadingDiv.style.display = 'none'; // Ladekreis ausblenden
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    successMessageDiv.style.display = 'block'; // Erfolgsmeldung anzeigen
+                    console.log('Formular erfolgreich übermittelt.'); // Logge die erfolgreiche Übermittlung
+                } else {
+                    errorMessageDiv.style.display = 'block'; // Fehlermeldung anzeigen
+                    console.error('Fehler beim Übermitteln des Formulars.'); // Logge den Fehler
+                }
+            };
+            // Bei einem Fehler
+            xhr.onerror = function () {
+                loadingDiv.style.display = 'none'; // Ladekreis ausblenden
+                errorMessageDiv.style.display = 'block'; // Fehlermeldung anzeigen
+                errorMessageDiv.innerText = 'Fehler beim Senden des Formulars. Bitte versuche es erneut.'; // Fehlermeldung setzen
+                console.error('Fehler beim Senden des Formulars. Bitte versuche es erneut.'); // Logge den Fehler
+            };
+            xhr.send(formData);
+        });
+
+        document.getElementById('nummer').addEventListener('input', function () {
+            /**
+             * Event-Listener für die Eingabe in das Nummern-Feld
+             * Überprüfe dauerhaft, ob die Nummer verfügbar oder nicht verfügbar ist
+             * @type {HTMLElement | *}
+             */
+
+            let nummerInput = this; // Input Element
+            let nummerStatus = document.getElementById('nummerStatus'); // Span-Element für den Status
+            let nummer = nummerInput.value.trim(); // Eingegebene Nummer
+
+            // Wenn keine Nummer eingegeben wurde, zeige gar nichts an
+            if (nummer === '') {
+                nummerStatus.innerHTML = ''; // Setze den Inhalt auf nichts
+                document.getElementById('availableNumbers').style.display = 'none'; // Blende die verfügbaren Nummern aus
+                return;
+            }
+
+            if (checkNumberAvailability(nummer)) {
+                nummerStatus.innerHTML = '&#10007;'; // Zeige ein Kreuz an, um zu zeigen, dass die Nummer nicht verfügbar ist
+                nummerInput.classList.add('error'); // Füge die Klasse 'error' hinzu
+                nummerStatus.style.color = 'var(--primary-color)'; // Setze die Farbe auf Rot
+                document.getElementById('availableNumbers').style.display = 'block'; // Blende die verfügbaren Nummern ein
+            } else {
+                nummerStatus.innerHTML = '&#10003;'; // Zeige einen Haken an, um zu zeigen, dass die Nummer verfügbar ist
+                nummerInput.classList.remove('error'); // Entferne die Klasse 'error'
+                nummerStatus.style.color = 'var(--success-color)'; // Setze die Farbe auf Grün
+                nummerInput.style.border = '1px solid var(--grey-color)'; // Setze die Borderfarbe zurück auf Grau
+                document.getElementById('availableNumbers').style.display = 'none'; // Blende die verfügbaren Nummern aus
+                document.getElementById('errorMessage').style.display = 'none'; // Fehlermeldung ausblenden
+            }
+        });
+    }
+
+    function checkNumberAvailability(number) {
+        /**
+         * Überprüft, ob die eingegebene Nummer bereits verwendet wurde oder nicht und ob es sich um eine
+         * legitime Nummer handelt
+         * @param number die eingegebene Nummer
+         */
+        return !(!isNaN(number) && number.toString().length <= 2 && !usedNumbers.includes(number) && !number.startsWith('0'));
+    }
+
+    function fetchUsedNumbers() {
+        /**
+         * Lädt die bisher verwendeten Nummern aus einer Google-Tabelle
+         */
+
+            // Data Map für die TSV-Datei
+        let dataMappings = [{
+                tsvUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTerExEBr8ckCDU8fQ8fq_YfJaO1owaFZzs9QO9vcb8tw0AWz_KmangKG472_w6A8xVsYlBQ1rif9v_/pub?gid=218877931&single=true&output=tsv',
+                range: 'A1:A',
+                storageKey: 'usedNumbers'
+            }];
+
+        // Lade die Daten aus der TSV-Datei
+        let fetchPromises = dataMappings.map(mapping =>
+            fetch(mapping.tsvUrl + '&range=' + mapping.range)
+                .then(response => response.text())
+                .then(data => {
+                    // Trenne die einzelnen Werte voneinander
+                    let numbers = data.split('\r\n');
+                    // Filter leere Strings
+                    numbers = numbers.filter(number => number.trim() !== '');
+                    // Speichere die Nummern in der globalen Variable
+                    usedNumbers.push(...numbers);
+                })
+                .catch(error => console.error('Fehler beim Laden der TSV-Daten:', error))
+        );
+
+        // Warte auf das Ende aller Fetch-Requests
+        Promise.all(fetchPromises)
+            .then(() => {
+                // Logge die erfolgreiche Übermittlung
+                console.log('Die Daten wurden erfolgreich geladen');
+                console.log('Die geladenen Zahlen sind:', usedNumbers);
+                // Aktualisiere die verfügbaren Nummern
+                updateAvailableNumbers();
+            })
+            .catch(error => console.error('Fehler beim Laden der Daten:', error));
+    }
+
+    function updateAvailableNumbers() {
+        /**
+         * Aktualisiert die verfügbaren Nummern
+         */
+        let availableNumbersSpan = document.getElementById('availableNumbersSpan');
+        let availableNumbers = [];
+        for (let i = 1; i <= 99; i++) {
+            if (!usedNumbers.includes(i.toString())) {
+                availableNumbers.push(i);
+            }
+        }
+        availableNumbersSpan.textContent = 'Verfügbare Nummern: ' + availableNumbers.join(', ');
+    }
+
+    // Speichert die bisher verwendeten Nummern
+    let usedNumbers = [];
+
+    init();
+</script>
+</body>
+</html>
