@@ -758,7 +758,7 @@
          * legitime Nummer handelt
          * @param number die eingegebene Nummer
          */
-        return !(!isNaN(number) && number.toString().length <= 2 && !usedNumbers.includes(number) && !number.startsWith('0'));
+        return !(!isNaN(number) && number.toString().length <= 2 && !usedNumbers.includes(number) && !number.startsWith('0') && parseInt(number) > 0 && parseInt(number) < 100);
     }
 
     function fetchUsedNumbers() {
