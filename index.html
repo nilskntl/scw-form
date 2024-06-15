@@ -31,7 +31,7 @@ Nutzung:
          * Lädt den HTML-Code zum Einbinden
          */
         try {
-            let response = await fetch('https://raw.githubusercontent.com/nilskntl/scw-shirts/master/src/index.html');
+            let response = await fetch('https://raw.githubusercontent.com/nilskntl/scw-form/master/src/index.html');
             if (response.ok) {
                 let htmlContent = await response.text();
                 let frame = document.getElementById('contentFrame');
