@@ -341,7 +341,7 @@
 <div id="form-container">
     <div id="form-header">
         <img id="scw-icon"
-             src="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/assets/scw_icon_128.png"
+             src="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/assets/images/scw_icon_128.png"
              alt="SCW Icon">
         <span id="form-header-text">
                     Bestellformular
@@ -371,12 +371,12 @@
                 <div class="form-input">
                     <div id="form-select-type-shirt" class="form-select-type__item form-select-type__item-selected">
                         <img class="form-select-type__item-image"
-                             src="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/assets/shirt_128.png"
+                             src="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/assets/images/shirt_128.png"
                              alt="SCW Icon">
                     </div>
                     <div id="form-select-type-cap" class="form-select-type__item">
                         <img class="form-select-type__item-image"
-                             src="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/assets/swim_cap_128.png"
+                             src="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/assets/images/swim_cap_128.png"
                              alt="SCW Icon">
                     </div>
                 </div>
@@ -442,8 +442,8 @@
                 <div class="form-input">
                     <select id="badekappe" name="badekappe">
                         <option value="" disabled selected hidden>Wähle das Modell der Badekappe</option>
-                        <option value="Normal">Normal</option>
-                        <option value="Aquaforce">Aquaforce</option>
+                        <option value="Moulded Pro II">Moulded Pro II</option>
+                        <option value="3D Soft">3D Soft</option>
                     </select>
                 </div>
             </div>
@@ -452,14 +452,14 @@
                 <div class="form-label">
                 </div>
                 <div class="form-input">
-                    <a class="cap-link" href="https://www.mundoboaforma.com.br/wp-content/uploads/2014/11/markus_ruhl.jpg" target="_blank">↗ Normale Badekappe (15€)</a>
+                    <a class="cap-link" href="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/assets/caps/moulded_pro_2,pdf" target="_blank">↗ Moulded Pro II Badekappe (15€)</a>
                 </div>
             </div>
             <div id="form-cap-more-info-2" class="form-field-container" style="display: none">
                 <div class="form-label">
                 </div>
                 <div class="form-input">
-                    <a class="cap-link" href="https://www.mundoboaforma.com.br/wp-content/uploads/2014/11/markus_ruhl.jpg" target="_blank">↗ Aquaforce Badekappe (45€)</a>
+                    <a class="cap-link" href="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/assets/caps/3d_soft,pdf" target="_blank">↗ 3D Soft Badekappe (45€)</a>
                 </div>
             </div>
             <!-- Details zu der Bestellung der Badekappen -->
@@ -644,7 +644,7 @@
             // Überprüfe, ob die Nummer verfügbar ist
             let nummerInput = document.getElementById('nummer');
             let nummer = nummerInput.value.trim();
-            if (checkNumberAvailability(nummer)) {
+            if (formData.get('bestellung') === 'shirt' && checkNumberAvailability(nummer)) {
                 // Färbe die Border des Nummernfeldes rot
                 nummerInput.style.border = '2px solid var(--primary-color)';
                 return;
@@ -718,10 +718,10 @@
         const capSizeSelect = document.getElementById('groesse-badekappe');
 
         const capOptions = {
-            Normal: [
+            "Moulded Pro II": [
                 {value: 'Einheitsgröße', text: 'Einheitsgröße'}
             ],
-            Aquaforce: [
+            "3D Soft": [
                 {value: 'M', text: 'M'},
                 {value: 'L', text: 'L'}
             ],
