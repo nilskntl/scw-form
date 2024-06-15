@@ -435,8 +435,8 @@
                 <div class="form-input">
                     <select id="badekappe" name="badekappe">
                         <option value="" disabled selected hidden>Wähle das Modell der Badekappe</option>
-                        <option value="Normal">Normal (15€)</option>
-                        <option value="Aquaforce">Aquaforce (45€)</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Aquaforce">Aquaforce</option>
                     </select>
                 </div>
             </div>
@@ -445,14 +445,14 @@
                 <div class="form-label">
                 </div>
                 <div class="form-input">
-                    <a class="cap-link">Link zur normalen Kappe</a>
+                    <a class="cap-link" href="https://www.mundoboaforma.com.br/wp-content/uploads/2014/11/markus_ruhl.jpg" target="_blank">↗ Normale Badekappe (15€)</a>
                 </div>
             </div>
             <div id="form-cap-more-info-2" class="form-field-container" style="display: none">
                 <div class="form-label">
                 </div>
                 <div class="form-input">
-                    <a class="cap-link">Link zur aquaforce Kappe</a>
+                    <a class="cap-link" href="https://www.mundoboaforma.com.br/wp-content/uploads/2014/11/markus_ruhl.jpg" target="_blank">↗ Aquaforce Badekappe (45€)</a>
                 </div>
             </div>
             <!-- Details zu der Bestellung der Badekappen -->
@@ -464,9 +464,6 @@
                 <div id="form-input-details-cap" class="form-input">
                     <select id="groesse-badekappe" name="groesse">
                         <option value="" disabled selected hidden>Größe</option>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
                     </select>
                     <select id="anzahl-badekappe" name="anzahl">
                         <option value="" disabled selected hidden>Anzahl</option>
@@ -553,7 +550,6 @@
             amount: document.getElementById('anzahl-badekappe'),
             size: document.getElementById('groesse-badekappe'),
         }
-
 
         // Loop through each select type item
         selectTypeItems.forEach((selectTypeItem) => {
@@ -707,6 +703,43 @@
                 numberInput.style.border = '1px solid var(--grey-color)'; // Setze die Borderfarbe zurück auf Grau
                 document.getElementById('availableNumbers').style.display = 'none'; // Blende die verfügbaren Nummern aus
                 document.getElementById('errorMessage').style.display = 'none'; // Fehlermeldung ausblenden
+            }
+        });
+
+        const capSelect = document.getElementById('badekappe');
+        const capSizeSelect = document.getElementById('groesse-badekappe');
+
+        const capOptions = {
+            Normal: [
+                {value: 'Einheitsgröße', text: 'Einheitsgröße'}
+            ],
+            Aquaforce: [
+                {value: 'M', text: 'M'},
+                {value: 'L', text: 'L'}
+            ],
+        };
+
+        capSelect.addEventListener('change', function () {
+            const selectedCap = capSelect.value;
+
+            while (capSizeSelect.options.length > 1) {
+                capSizeSelect.options.remove(1);
+            }
+
+            if (selectedCap) {
+                const options = capOptions[selectedCap];
+
+                // Füge neue Optionen hinzu
+                options.forEach(option => {
+                    const newOption = document.createElement('option');
+                    newOption.value = option.value;
+                    newOption.textContent = option.text;
+                    capSizeSelect.appendChild(newOption);
+                });
+                capSizeSelect.options[0].selected = true;
+                capSizeSelect.disabled = false;
+            } else {
+                capSizeSelect.disabled = true;
             }
         });
     }
