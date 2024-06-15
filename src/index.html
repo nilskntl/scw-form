@@ -141,7 +141,7 @@
             }
 
             /* Positionierung für das Nummernstatus-Span-Element */
-            #nummerStatus {
+            #number-status {
                 font-size: 20px;
                 position: absolute;
                 top: 482px;
@@ -260,6 +260,10 @@
                 margin-bottom: 8px;
             }
 
+            img {
+                pointer-events: none;
+            }
+
             @media screen and (max-width: 600px) {
 
                 .dotted-line {
@@ -309,6 +313,14 @@
 
                 #form-cap-more-info-2 {
                     margin-bottom: 16px;
+                }
+
+                #availableNumbers {
+                    transform: translateY(-12px);
+                }
+
+                #number-status {
+                    top: 477px;
                 }
             }
 
@@ -471,7 +483,7 @@
                         <!-- Nummern-Feld -->
                         <input type="tel" id="nummer" name="nummer" required placeholder="1 - 99">
                         <!-- Status der Nummer. Zeigt an, ob die Nummer verfügbar ist oder nicht -->
-                        <span id="nummerStatus" class="nummer-status"></span>
+                        <span id="number-status" class="nummer-status"></span>
                     </div>
                 </div>
                 <div id="form-available-numbers-text" class="form-field-container">
@@ -670,27 +682,27 @@
                  * @type {HTMLElement | *}
                  */
 
-                let nummerInput = this; // Input Element
-                let nummerStatus = document.getElementById('nummerStatus'); // Span-Element für den Status
-                let nummer = nummerInput.value.trim(); // Eingegebene Nummer
+                let numberInput = this; // Input Element
+                let numberStatus = document.getElementById('number-status'); // Span-Element für den Status
+                let number = numberInput.value.trim(); // Eingegebene Nummer
 
                 // Wenn keine Nummer eingegeben wurde, zeige gar nichts an
-                if (nummer === '') {
-                    nummerStatus.innerHTML = ''; // Setze den Inhalt auf nichts
+                if (number === '') {
+                    numberStatus.innerHTML = ''; // Setze den Inhalt auf nichts
                     document.getElementById('availableNumbers').style.display = 'none'; // Blende die verfügbaren Nummern aus
                     return;
                 }
 
-                if (checkNumberAvailability(nummer)) {
-                    nummerStatus.innerHTML = '&#10007;'; // Zeige ein Kreuz an, um zu zeigen, dass die Nummer nicht verfügbar ist
-                    nummerInput.classList.add('error'); // Füge die Klasse 'error' hinzu
-                    nummerStatus.style.color = 'var(--primary-color)'; // Setze die Farbe auf Rot
+                if (checkNumberAvailability(number)) {
+                    numberStatus.innerHTML = '&#10007;'; // Zeige ein Kreuz an, um zu zeigen, dass die Nummer nicht verfügbar ist
+                    numberInput.classList.add('error'); // Füge die Klasse 'error' hinzu
+                    numberStatus.style.color = 'var(--primary-color)'; // Setze die Farbe auf Rot
                     document.getElementById('availableNumbers').style.display = 'block'; // Blende die verfügbaren Nummern ein
                 } else {
-                    nummerStatus.innerHTML = '&#10003;'; // Zeige einen Haken an, um zu zeigen, dass die Nummer verfügbar ist
-                    nummerInput.classList.remove('error'); // Entferne die Klasse 'error'
-                    nummerStatus.style.color = 'var(--success-color)'; // Setze die Farbe auf Grün
-                    nummerInput.style.border = '1px solid var(--grey-color)'; // Setze die Borderfarbe zurück auf Grau
+                    numberStatus.innerHTML = '&#10003;'; // Zeige einen Haken an, um zu zeigen, dass die Nummer verfügbar ist
+                    numberInput.classList.remove('error'); // Entferne die Klasse 'error'
+                    numberStatus.style.color = 'var(--success-color)'; // Setze die Farbe auf Grün
+                    numberInput.style.border = '1px solid var(--grey-color)'; // Setze die Borderfarbe zurück auf Grau
                     document.getElementById('availableNumbers').style.display = 'none'; // Blende die verfügbaren Nummern aus
                     document.getElementById('errorMessage').style.display = 'none'; // Fehlermeldung ausblenden
                 }
