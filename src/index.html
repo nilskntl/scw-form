@@ -158,17 +158,20 @@
 
             .form-field-container {
                 display: flex;
-                align-items: center;
+                gap: 12px;
+                width: 100%;
             }
 
             .form-label {
-                width: 20%;
+                position: relative;
+                top: 8px;
+                width: 15%;
                 text-align: left;
                 color: var(--dark-grey-color);
             }
 
             .form-input {
-                width: calc(80% - 32px);
+                width: calc(85% - 44px);
                 display: flex;
                 gap: 12px;
             }
@@ -178,6 +181,7 @@
             input[type="email"],
             input[type="tel"],
             select {
+                min-width: 0;
                 padding-left: 8px;
                 flex: 1;
                 height: 42px;
@@ -239,6 +243,73 @@
 
             #availableNumbersSpan {
                 color: var(--primary-color);
+            }
+
+            .cap-link {
+                color: var(--primary-color);
+                text-decoration: none;
+                margin-bottom: 8px;
+                transform: translateY(-8px)
+            }
+
+            .cap-link:hover {
+                text-decoration: underline;
+            }
+
+            #form-cap-more-info-2 {
+                margin-bottom: 8px;
+            }
+
+            @media screen and (max-width: 600px) {
+
+                .dotted-line {
+                    width: calc(100% - 16px);
+                }
+
+                .form-select-type__item {
+                    width: 32px;
+                    height: 32px;
+                }
+                #scw-icon {
+                    width: 32px;
+                    height: 32px;
+                }
+
+                input[type="submit"] {
+                    width: calc(100% - 16px);
+                }
+
+                #form-header-text {
+                    font-size: 20px;
+                }
+
+                #form-body {
+                    padding: 6px;
+                }
+
+                .form-field-container {
+                    width: calc(100% - 16px);
+                    flex-direction: column;
+                    gap: 8px;
+                }
+
+                .cap-link {
+                    margin-bottom: 0;
+                }
+
+                .form-label {
+                    top: 0;
+                    width: fit-content;
+                }
+
+                .form-input {
+                    width: calc(100%);
+                    flex-direction: row;
+                }
+
+                #form-cap-more-info-2 {
+                    margin-bottom: 16px;
+                }
             }
 
         </style>
@@ -358,14 +429,14 @@
                     <div class="form-label">
                     </div>
                     <div class="form-input">
-                        <a>Link zur normalen Kappe</a>
+                        <a class="cap-link">Link zur normalen Kappe</a>
                     </div>
                 </div>
-                <div id="form-cap-more-info-2" class="form-field-container" style="display: none; margin-bottom: 16px">
+                <div id="form-cap-more-info-2" class="form-field-container" style="display: none">
                     <div class="form-label">
                     </div>
                     <div class="form-input">
-                        <a>Link zur aquaforce Kappe</a>
+                        <a class="cap-link">Link zur aquaforce Kappe</a>
                     </div>
                 </div>
                 <!-- Details zu der Bestellung der Badekappen -->
