@@ -39,7 +39,7 @@ function handleShirt(required, requiredShirt) {
     rowData.push(requiredShirt.shirtNumber); // Trikotnummer
     rowData.push(required.size); // Größe des Shirts
     rowData.push(requiredShirt.gender); // Geschlecht
-    rowData.push(requiredShirt.shirtPrint); // Wenn ein Aufdruck angegeben wurde, diesen verwenden}
+    rowData.push(required.imprint); // Aufdruck
     rowData.push(required.amount); // Anzahl der Shirts
 
     // Daten in die Tabelle einfügen
@@ -79,6 +79,7 @@ function handleCap(required, requiredCap) {
     rowData.push(requiredCap.typeCap); // Art der Badekappe
     rowData.push(required.size); // Größe der Badekappe
     rowData.push(required.amount); // Anzahl der Badekappen
+    rowData.push(required.imprint); // Aufdruck
 
     // Daten in die Tabelle einfügen
     sheet.appendRow(rowData);
@@ -96,12 +97,12 @@ function doPost(e) {
         email: e.parameter.email,
         amount: e.parameter.anzahl,
         size: e.parameter.groesse,
+        imprint: e.parameter.aufdruck === null || e.parameter.aufdruck === '' ? e.parameter.nachname : e.parameter.aufdruck,
     }
 
     const requiredShirt = {
         shirtNumber: e.parameter.nummer,
         gender: e.parameter.geschlecht,
-        shirtPrint: e.parameter.aufdruck === null || e.parameter.aufdruck === '' ? e.parameter.nachname : e.parameter.aufdruck,
     }
 
     const requiredCap = {
