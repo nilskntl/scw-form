@@ -1,4 +1,4 @@
-## SCW Shirt-Bestellung Online Formular
+## SCW Bestellungen Online Formular
 
 ### Beschreibung
 Einfaches Online-Formular für die Bestellungen des SCW.
