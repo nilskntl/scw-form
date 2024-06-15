@@ -27,25 +27,25 @@
                 background-color: var(--background-color); /* Hintergrundfarbe */
                 padding: 8px; /* Abstand zur Seite */
                 margin: 0; /* Rand */
+                overflow-x: hidden;
             }
 
             .dotted-line {
                 border: none;
                 border-top: 1px dotted var(--primary-color);
-                margin: 32px 0 32px 0; /* Optionaler Abstand nach oben und unten */
+                margin: 16px 0 16px 0; /* Optionaler Abstand nach oben und unten */
                 width: calc(100% - 32px);
             }
 
             #form-container {
                 display: flex;
                 flex-direction: column;
-                gap: 16px;
+                gap: 8px;
                 width: 100%; /* Breite des Containers */
                 max-width: 100%; /* Maximalbreite des Containers */
                 height: fit-content; /* Höhe des Containers */
                 margin: 0 auto; /* Zentriert auf der Seite */
                 background-color: var(--background-color); /* Hintergrundfarbe */
-                padding: var(--padding); /* Padding */
                 border-radius: 16px; /* Runde Ecken */
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Schatten */
             }
@@ -76,8 +76,8 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                width: 64px;
-                height: 64px;
+                width: 48px;
+                height: 48px;
                 border-radius: 50%;
                 padding: 16px;
                 border: 2px solid var(--grey-color);
@@ -107,7 +107,6 @@
             #form-body {
                 padding: 16px;
                 width: 100%;
-                overflow: hidden;
             }
 
             /* Stil für den Ladekreis */
@@ -145,8 +144,8 @@
             #nummerStatus {
                 font-size: 20px;
                 position: absolute;
-                top: 488px;
-                right: 20px;
+                top: 482px;
+                right: 32px;
                 transform: translateY(calc(-50% - 4px));
             }
 
@@ -376,7 +375,7 @@
                         Bestelldetails
                     </div>
                     <div class="form-input">
-                        <select id="groesse-badekappe" name="groesse" required>
+                        <select id="groesse-badekappe" name="groesse">
                             <option value="" disabled selected hidden>Größe</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
@@ -540,6 +539,12 @@
                 console.log(type);
                 formData.set('bestellung', type);
 
+                let formDataKeys = Array.from(formData.keys());
+                let formDataValues = Array.from(formData.values());
+
+                // Logge die Formulardaten
+                console.log('Formulardaten:', formDataKeys.map((key, index) => `${key}: ${formDataValues[index]}`).join(', '));
+
                 let xhr = new XMLHttpRequest(); // XMLHttpRequest-Objekt
                 let loadingDiv = document.getElementById('loading-circle'); // Ladekreis
                 let successMessageDiv = document.getElementById('successMessage'); // Erfolgsmeldung
@@ -685,7 +690,7 @@
 
         // Speichert die bisher verwendeten Nummern
         let usedNumbers = [];
-        const scriptUrl = 'https://script.google.com/macros/s/AKfycby460Nc_7jrfYMUDDpJuPPlKPnEIoKxSS917oQtC5pkdBgKFqZ52zNBF12lr5TmR5_dsw/exec';
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbzhvj7RKCl1MQ4y7hNyKe7eQujGQmZi9Byxz6H8JUdcwuITo_1dh7Nhzq78Wnp8a6H__A/exec';
         init();
     </script>
     </body>
