@@ -405,4 +405,10 @@ input:focus, select:focus {
     .gallery {
         gap: 2px;
     }
+
+    .gallery-img-div {
+        flex: 0 0 76px;
+        width: 76px;
+        height: 76px;
+    }
 }
