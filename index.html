@@ -22,7 +22,7 @@ Zur Verwendung des Formulars einfach den Code aus in eine neue HTML-Datei einfü
     </style>
 </head>
 <body>
-<iframe id="contentFrame" style="width: 100%; height: 100%; border: none"></iframe>
+<iframe id="content-frame" style="width: 100%; height: 100%; border: none"></iframe>
 <script>
 
     async function loadHtml() {
@@ -30,10 +30,10 @@ Zur Verwendung des Formulars einfach den Code aus in eine neue HTML-Datei einfü
          * Lädt den HTML-Code zum Einbinden
          */
         try {
-            let response = await fetch('https://raw.githubusercontent.com/nilskntl/scw-form/master/src/index.html');
+            let response = await fetch('https://raw.githubusercontent.com/nilskntl/scw-form/master/src/website/index.html');
             if (response.ok) {
                 let htmlContent = await response.text();
-                let frame = document.getElementById('contentFrame');
+                let frame = document.getElementById('content-frame');
                 let doc = frame.contentDocument || frame.contentWindow.document;
                 doc.open();
                 doc.write(htmlContent);
@@ -45,7 +45,6 @@ Zur Verwendung des Formulars einfach den Code aus in eine neue HTML-Datei einfü
             console.error('There has been a problem with your fetch operation:', error);
         }
     }
-
     loadHtml();
 </script>
 </body>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SCW Formular</title>
+    <link rel="stylesheet" href="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/form/style.css">
+</head>
+<body>
+<div id="form-container">
+    <div id="form-header">
+        <img id="scw-icon"
+             src="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/form/assets/images/scw_icon_128.png"
+             alt="SCW Icon">
+        <span id="form-header-text">
+            Bestellformular
+        </span>
+    </div>
+    <div id="form-body">
+        <!-- Ladekreis -->
+        <div id="loading-circle">
+            <svg width="50px" height="50px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                <circle cx="50" cy="50" fill="none" stroke="#007bff" stroke-width="8" r="35"
+                        stroke-dasharray="164.93361431346415 56.97787143782138">
+                    <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s"
+                                      values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+                </circle>
+            </svg>
+            <div>Bitte warten...</div>
+        </div>
+        <!-- Erfolgsmeldung und Fehlermeldung -->
+        <div id="successMessage" class="status-message">Erfolgreich gesendet!</div>
+        <div id="errorMessage" class="status-message">Fehler beim Senden des Formulars. Bitte versuche es erneut.</div>
+        <div id="form-content">
+            <div id="form-product-type container" class="form-field-container">
+                <div class="form-label required">
+                    Wähle ein Produkt aus:
+                </div>
+                <div class="form-input">
+                    <div id="form-select-type-shirt" class="form-select-type__item form-select-type__item-selected">
+                        <img class="form-select-type__item-image"
+                             src="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/form/assets/images/shirt_128.png"
+                             alt="SCW Icon">
+                    </div>
+                    <div id="form-select-type-shorts" class="form-select-type__item">
+                        <img class="form-select-type__item-image"
+                             src="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/form/assets/images/shorts_128.png"
+                             alt="SCW Icon">
+                    </div>
+                    <!---
+                    <div id="form-select-type-cap" class="form-select-type__item">
+                        <img class="form-select-type__item-image"
+                             src="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/form/assets/images/swim_cap_128.png"
+                             alt="SCW Icon">
+                    </div>
+                    --->
+                </div>
+            </div>
+            <div class="form-spacer" id="form-spacer">
+                <hr class="dotted-line">
+            </div>
+            <!-- Form: Shirt: -->
+            <form id="form-shirt" style="display: block" action="#" method="post">
+                <!-- Vorname und Nachname -->
+                <div id="form-shirt-fist-name-container" class="form-field-container">
+                    <div class="form-label required">
+                        Dein Name
+                    </div>
+                    <div class="form-input">
+                        <input type="text" name="vorname" required placeholder="Vorname">
+                        <input type="text" name="nachname" required placeholder="Nachname">
+                    </div>
+                </div>
+                <!-- E-Mail -->
+                <div id="form-shirt-email-container" class="form-field-container">
+                    <div class="form-label required">
+                        Deine E-Mail
+                    </div>
+                    <div class="form-input">
+                        <input type="email" name="email" required placeholder="E-Mail-Adresse">
+                    </div>
+                </div>
+                <!-- Bestelldetails -->
+                <div id="form-shirt-details-shirt-container" class="form-field-container">
+                    <div class="form-label required">
+                        Bestelldetails
+                    </div>
+                    <div id="form-shirt-input-details-shirt" class="form-input">
+                        <select id="shirt-geschlecht" name="geschlecht" required>
+                            <option value="" disabled selected hidden>Geschlecht</option>
+                            <option value="W">Weiblich</option>
+                            <option value="M">Männlich</option>
+                            <option value="D">Divers</option>
+                        </select>
+                        <select id="shirt-groesse-shirt" name="groesse" required>
+                            <option value="" disabled selected hidden>Größe</option>
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
+                        </select>
+                        <select id="shirt-anzahl-shirt" name="anzahl" required>
+                            <option value="" disabled selected hidden>Anzahl</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Nummer -->
+                <div id="form-number-container" class="form-field-container">
+                    <div class="form-label required">
+                        Deine Nummer
+                    </div>
+                    <div class="form-input">
+                        <!-- Nummern-Feld -->
+                        <input type="tel" id="nummer" name="nummer" required placeholder="1 - 99">
+                        <!-- Status der Nummer. Zeigt an, ob die Nummer verfügbar ist oder nicht -->
+                        <span id="number-status" class="nummer-status"></span>
+                    </div>
+                </div>
+                <div id="form-available-numbers-text" class="form-field-container">
+                    <div class="form-label">
+                    </div>
+                    <div class="form-input">
+                        <!-- Anzeige für verfügbare Nummern -->
+                        <div id="available-numbers"><span id="available-numbers-span"></span></div>
+                    </div>
+                </div>
+                <!-- Aufdruck -->
+                <div id="shirt-form-print-container" class="form-field-container">
+                    <div class="form-label">
+                        Aufdruck
+                    </div>
+                    <div class="form-input">
+                        <input type="text" name="aufdruck" placeholder="Nachname">
+                    </div>
+                </div>
+                <!-- Senden-Button -->
+                <input type="submit" value="Senden">
+            </form>
+            <!-- Form: Cap: -->
+            <form id="form-cap" style="display: none" action="#" method="post">
+                <!-- Vorname und Nachname -->
+                <div id="form-cap-fist-name-container" class="form-field-container">
+                    <div class="form-label required">
+                        Dein Name
+                    </div>
+                    <div class="form-input">
+                        <input type="text" name="vorname" required placeholder="Vorname">
+                        <input type="text" name="nachname" required placeholder="Nachname">
+                    </div>
+                </div>
+                <!-- E-Mail -->
+                <div id="form-cap-email-container" class="form-field-container">
+                    <div class="form-label required">
+                        Deine E-Mail
+                    </div>
+                    <div class="form-input">
+                        <input type="email" name="email" required placeholder="E-Mail-Adresse">
+                    </div>
+                </div>
+                <!-- Badekappen-Art -->
+                <div id="form-cap-details-type-cap-container" class="form-field-container">
+                    <div class="form-label required">
+                        Badekappen-Modell
+                    </div>
+                    <div class="form-input">
+                        <select id="cap-model" name="badekappe">
+                            <option value="" disabled selected hidden>Wähle das Modell der Badekappe</option>
+                            <option value="Moulded Pro II">Moulded Pro II</option>
+                            <option value="3D Soft">3D Soft</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Mehr Infos (Links) zu Badekappen Art -->
+                <div id="form-cap-more-info-1" class="form-field-container">
+                    <div class="form-label">
+                    </div>
+                    <div class="form-input">
+                        <a class="cap-link"
+                           href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/nilskntl/scw-form/master/src/form/assets/caps/moulded_pro_2.pdf"
+                           target="_blank">↗ Moulded Pro II Badekappe (15€)</a>
+                    </div>
+                </div>
+                <div id="form-cap-more-info-2" class="form-field-container">
+                    <div class="form-label">
+                    </div>
+                    <div class="form-input">
+                        <a class="cap-link"
+                           href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/nilskntl/scw-form/master/src/form/assets/caps/3d_soft.pdf"
+                           target="_blank">↗ 3D Soft Badekappe (45€)</a>
+                    </div>
+                </div>
+                <!-- Details zu der Bestellung der Badekappen -->
+                <!-- Badekappen-Art -->
+                <div id="form-details-cap-container" class="form-field-container">
+                    <div class="form-label required">
+                        Bestelldetails
+                    </div>
+                    <div id="cap-form-input-details-cap" class="form-input">
+                        <select id="cap-size" name="groesse">
+                            <option value="" disabled selected hidden>Größe</option>
+                            <option value="" disabled>Wähle erst das Modell</option>
+                        </select>
+                        <select id="cap-amount" name="anzahl">
+                            <option value="" disabled selected hidden>Anzahl</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Aufdruck -->
+                <div id="cap-form-print-container" class="form-field-container">
+                    <div class="form-label">
+                        Aufdruck
+                    </div>
+                    <div class="form-input">
+                        <input type="text" name="aufdruck" placeholder="Nachname">
+                    </div>
+                </div>
+                <!-- Senden-Button -->
+                <input type="submit" value="Senden">
+            </form>
+            <!-- Form: Shorts: -->
+            <form id="form-shorts" style="display: none" action="#" method="post">
+                <!-- Vorname und Nachname -->
+                <div id="form-shorts-fist-name-container" class="form-field-container">
+                    <div class="form-label required">
+                        Dein Name
+                    </div>
+                    <div class="form-input">
+                        <input type="text" name="vorname" required placeholder="Vorname">
+                        <input type="text" name="nachname" required placeholder="Nachname">
+                    </div>
+                </div>
+                <!-- E-Mail -->
+                <div id="form-shorts-email-container" class="form-field-container">
+                    <div class="form-label required">
+                        Deine E-Mail
+                    </div>
+                    <div class="form-input">
+                        <input type="email" name="email" required placeholder="E-Mail-Adresse">
+                    </div>
+                </div>
+                <!-- Details zu der Bestellung der Hosen -->
+                <!-- Badekappen-Art -->
+                <div id="form--shorts-details-container" class="form-field-container">
+                    <div class="form-label required">
+                        Bestelldetails
+                    </div>
+                    <div id="form-shorts-input-details" class="form-input">
+                        <select id="shorts-size" name="groesse">
+                            <option value="" disabled selected hidden>Größe</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                        </select>
+                        <select id="shorts-amount" name="anzahl">
+                            <option value="" disabled selected hidden>Anzahl</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="shorts-price" class="form-field-container">
+                    <span id="shorts-price-label" class="form-label">Preis: </span>
+                    <span id="shorts-price-value" class="form-input">31€ / Stück</span>
+                </div>
+                <!-- Senden-Button -->
+                <input type="submit" value="Senden">
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/form/script.js"></script>
+</body>
+</html>

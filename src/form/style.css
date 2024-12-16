@@ -1,0 +1,340 @@
+/* Definiere Farben */
+:root {
+    --primary-color: #ff0024; /* SCW Rot */
+    --background-color: #ffffff; /* Hintergrundfarbe */
+    --grey-color: #cccccc; /* Grau */
+    --light-grey-color: #f3f3f3; /* Hellgrau */
+    --dark-grey-color: #666666; /* Dunkelgrau */
+    --text-color: #000000; /* Textfarbe */
+    --success-color: #28a745; /* Grün */
+    --black-color: #000000; /* Schwarz */
+    --padding: 8px; /* Padding */
+    --transition-duration: 0.3s; /* Übergangsdauer */
+}
+
+/* Globale Einstellungen */
+body {
+    font-family: Arial, sans-serif; /* Schriftart auf Arial setzen */
+    font-size: 12px; /* Schriftgröße */
+    font-weight: normal; /* Schriftgewicht */
+    color: var(--text-color); /* Textfarbe */
+    background-color: var(--background-color); /* Hintergrundfarbe */
+    padding: 8px; /* Abstand zur Seite */
+    margin: 0; /* Rand */
+    overflow-x: hidden;
+}
+
+.dotted-line {
+    border: none;
+    border-top: 1px dotted var(--primary-color);
+    margin: 16px 0 16px 0; /* Optionaler Abstand nach oben und unten */
+    width: calc(100% - 32px);
+}
+
+#form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%; /* Breite des Containers */
+    max-width: 100%; /* Maximalbreite des Containers */
+    height: fit-content; /* Höhe des Containers */
+    margin: 0 auto; /* Zentriert auf der Seite */
+    background-color: var(--background-color); /* Hintergrundfarbe */
+    border-radius: 16px; /* Runde Ecken */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Schatten */
+}
+
+#form-header {
+    display: flex;
+    gap: 8px;
+    justify-content: left;
+    align-items: center;
+    background-color: var(--primary-color);
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
+    padding: 8px 8px 8px 16px;
+}
+
+#form-header-text {
+    font-size: 24px;
+    color: var(--background-color);
+    font-weight: bold;
+}
+
+#scw-icon {
+    width: 64px;
+    height: 64px;
+}
+
+.form-select-type__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    padding: 16px;
+    border: 2px solid var(--grey-color);
+    transition: border-color var(--transition-duration), background-color var(--transition-duration);
+}
+
+.form-select-type__item:hover {
+    background-color: var(--light-grey-color);
+}
+
+.form-select-type__item:hover .form-select-type__item-image {
+    width: 75%;
+    height: 75%;
+}
+
+.form-select-type__item-selected {
+    border-color: var(--primary-color);
+}
+
+.form-select-type__item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: width var(--transition-duration), height var(--transition-duration);
+}
+
+#form-body {
+    padding: 16px;
+    width: 100%;
+}
+
+/* Stil für den Ladekreis */
+#loading-circle {
+    display: none;
+    text-align: center;
+    position: relative;
+    left: 50%;
+    top: 64px;
+    transform: translate(-50%, -50%);
+}
+
+.status-message {
+    text-align: center;
+    font-size: 16px;
+    position: relative;
+    left: 50%;
+    top: 64px;
+    transform: translate(-50%, -50%);
+}
+
+#successMessage,
+#errorMessage {
+    display: none;
+}
+
+#successMessage {
+    color: var(--success-color);
+}
+
+#errorMessage {
+    color: var(--primary-color);
+}
+
+/* Positionierung für das Nummernstatus-Span-Element */
+#number-status {
+    font-size: 20px;
+    position: absolute;
+    top: 426px;
+    right: 32px;
+    transform: translateY(calc(-50% - 4px));
+}
+
+/* Design für das Formular */
+form {
+    max-width: 100%;
+    color: var(--text-color); /* Textfarbe */
+    accent-color: var(--primary-color); /* Akzentfarbe */
+}
+
+.form-field-container {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+.form-label {
+    position: relative;
+    top: 8px;
+    width: 15%;
+    text-align: left;
+    color: var(--dark-grey-color);
+}
+
+.form-input {
+    width: calc(85% - 44px);
+    display: flex;
+    gap: 12px;
+}
+
+/* Design für die Felder */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select {
+    -webkit-appearance: inherit;
+    font-size: 12px;
+    min-width: 0;
+    padding-left: 8px;
+    flex: 1;
+    height: 42px;
+    margin-bottom: 15px;
+    border: 1px solid var(--grey-color);
+    border-radius: 5px;
+    box-sizing: border-box;
+    position: relative;
+    background: var(--light-grey-color);
+    color: var(--text-color);
+}
+
+/* Design für den Senden-Button */
+input[type="submit"] {
+    width: calc(100% - 32px);
+    padding: 10px; /* Abstand zur Seite */
+    background-color: var(--primary-color); /* Hintergrundfarbe */
+    border: none; /* Border */
+    color: var(--background-color); /* Textfarbe */
+    border-radius: 5px; /* Border-Radius */
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 32px;
+    margin-bottom: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Schatten */
+}
+
+/* Design für den Senden-Button beim Hovern */
+input[type="submit"]:hover {
+    /* Wähle als Hintergrundfarbe eine leicht dunklere als die primary */
+    background-color: #d9001b;
+    transition: background-color 0.5s ease; /* Übergangseffekt */
+}
+
+/* Design für die Felder, beim Hovern */
+input[type="text"]:hover,
+input[type="email"]:hover,
+input[type="tel"]:hover,
+select:hover {
+    border: 1px solid var(--black-color);
+    transition: border-color 0.5s ease; /* Übergangseffekt */
+}
+
+/* Design für Felder, wenn diese ausgewählt sind */
+input:focus, select:focus {
+    border: 2px solid var(--black-color); /* Border */
+}
+
+/* Ergänze rotes Sternchen für Pflichtfelder */
+.required:after {
+    content: " *";
+    color: var(--primary-color);
+}
+
+#available-numbers {
+    display: none;
+    margin-bottom: 16px;
+}
+
+#available-numbers-span {
+    color: var(--primary-color);
+}
+
+.cap-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-bottom: 8px;
+    transform: translateY(-6px)
+}
+
+.cap-link:hover {
+    text-decoration: underline;
+}
+
+#form-cap-more-info-2 {
+    margin-bottom: 8px;
+}
+
+#shorts-price-value {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+#shorts-price-label {
+    top: 0px;
+}
+
+img {
+    pointer-events: none;
+}
+
+@media screen and (max-width: 600px) {
+
+    .dotted-line {
+        width: calc(100% - 16px);
+    }
+
+    .form-select-type__item {
+        width: 32px;
+        height: 32px;
+    }
+
+    #scw-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    input[type="submit"] {
+        width: calc(100% - 16px);
+    }
+
+    #form-header-text {
+        font-size: 20px;
+    }
+
+    #form-body {
+        padding: 6px;
+    }
+
+    .form-field-container {
+        width: calc(100% - 16px);
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .cap-link {
+        margin-bottom: 0;
+        transform: translateY(-12px)
+    }
+
+    .form-label {
+        top: 0;
+        width: fit-content;
+    }
+
+    .form-input {
+        width: calc(100%);
+        flex-direction: row;
+    }
+
+    #form-cap-more-info-2 {
+        margin-bottom: 16px;
+    }
+
+    #available-numbers {
+        transform: translateY(-12px);
+    }
+
+    #number-status {
+        top: 477px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select {
+        font-size: 10px;
+    }
+}
