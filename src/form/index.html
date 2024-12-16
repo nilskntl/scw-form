@@ -229,6 +229,18 @@
             </form>
             <!-- Form: Shorts: -->
             <form id="form-shorts" style="display: none" action="#" method="post">
+                <div class="gallery">
+                    <img src="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/form/assets/shorts/front_1.png" alt="Front 1" onclick="openLightbox(this)">
+                    <img src="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/form/assets/shorts/front_2.png" alt="Front 2" onclick="openLightbox(this)">
+                    <img src="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/form/assets/shorts/back_1.png" alt="Back 1" onclick="openLightbox(this)">
+                    <img src="https://raw.githubusercontent.com/nilskntl/scw-form/master/src/form/assets/shorts/back_2.png" alt="Back 2" onclick="openLightbox(this)">
+                </div>
+
+                <div id="lightbox" onclick="closeLightbox()">
+                    <span id="closeLightbox">&times;</span>
+                    <img id="lightboxImage" src="" alt="Lightbox Image">
+                </div>
+
                 <!-- Vorname und Nachname -->
                 <div id="form-shorts-fist-name-container" class="form-field-container">
                     <div class="form-label required">

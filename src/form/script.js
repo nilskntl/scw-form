@@ -7,6 +7,12 @@ function init() {
     createCapListener();
     createShortsListener();
     fetchUsedNumbers();
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeLightbox();
+        }
+    });
 }
 
 function sendForm(formData) {
@@ -292,6 +298,18 @@ function updateAvailableNumbers() {
         }
     }
     availableNumbersSpan.textContent = 'Verfügbare Nummern: ' + availableNumbers.join(', ');
+}
+
+function openLightbox(img) {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    lightboxImage.src = img.src;
+    lightbox.classList.add('active');
+}
+
+function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    lightbox.classList.remove('active');
 }
 
 let usedNumbers = [];
