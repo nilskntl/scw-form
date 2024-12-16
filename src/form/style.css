@@ -268,14 +268,15 @@ input:focus, select:focus {
 
 #shorts-gallery {
     padding-bottom: 12px;
+    width: 100%;
+    overflow-x: auto; /* Aktiviert horizontales Scrollen */
+    white-space: nowrap; /* Verhindert Zeilenumbrüche innerhalb des Containers */
 }
 
 .gallery {
     display: flex;
     gap: 8px;
     background-color: white;
-    overflow-x: auto; /* Aktiviert horizontales Scrollen */
-    white-space: nowrap; /* Verhindert Zeilenumbrüche innerhalb des Containers */
     width: 100%; /* Beschränkt die Breite des Containers auf die Bildschirmbreite */
 }
 
@@ -399,5 +400,9 @@ input:focus, select:focus {
     input[type="tel"],
     select {
         font-size: 10px;
+    }
+
+    .gallery {
+        gap: 2px;
     }
 }
