@@ -24,13 +24,12 @@ Zur Verwendung des Formulars einfach den Code aus in eine neue HTML-Datei einfü
 <body>
 <iframe id="content-frame" style="width: 100%; height: 100%; border: none"></iframe>
 <script>
-
     async function loadHtml() {
         /**
          * Lädt den HTML-Code zum Einbinden
          */
         try {
-            let response = await fetch('https://raw.githubusercontent.com/nilskntl/scw-form/master/src/website/index.html');
+            let response = await fetch('https://raw.githubusercontent.com/nilskntl/scw-form/master/src/form/index.html');
             if (response.ok) {
                 let htmlContent = await response.text();
                 let frame = document.getElementById('content-frame');
