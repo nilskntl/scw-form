@@ -284,6 +284,7 @@ input:focus, select:focus {
     flex: 0 0 124px;
     width: 124px;
     height: 124px;
+    max-width: 124px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -407,8 +408,10 @@ input:focus, select:focus {
     }
 
     .gallery-img-div {
-        flex: 0 0 76px;
-        width: 76px;
-        height: 76px;
+        flex: 0 0 96px;
+        width: 96px;
+        height: 96px;
+        max-width: 96px;
+        margin-bottom: 8px;
     }
 }
