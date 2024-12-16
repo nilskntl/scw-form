@@ -296,31 +296,33 @@ function updateAvailableNumbers() {
 }
 
 function addImageGalerie() {
-    document.addEventListener('DOMContentLoaded', () => {
-        const galleryImages = document.querySelectorAll('.gallery-img');
-        const fullscreenOverlay = document.getElementById('fullscreen-overlay');
-        const fullscreenImg = document.getElementById('fullscreen-img');
-        const closeBtn = document.querySelector('.close-btn');
+    console.log('Adding Galerie');
 
-        // Add click event to each gallery image
-        galleryImages.forEach(img => {
-            img.addEventListener('click', () => {
-                fullscreenImg.src = img.src;
-                fullscreenOverlay.style.display = 'flex';
-            });
+    const galleryImages = document.querySelectorAll('.gallery-img');
+    const fullscreenOverlay = document.getElementById('fullscreen-overlay');
+    const fullscreenImg = document.getElementById('fullscreen-img');
+    const closeBtn = document.querySelector('.close-btn');
+
+    // Add click event to each gallery image
+    galleryImages.forEach(img => {
+    console.log('Add Event Listener');
+        img.addEventListener('click', () => {
+            console.log("Clicked");
+            fullscreenImg.src = img.src;
+            fullscreenOverlay.style.display = 'flex';
         });
+    });
 
-        // Close fullscreen when clicking close button
-        closeBtn.addEventListener('click', () => {
+    // Close fullscreen when clicking close button
+    closeBtn.addEventListener('click', () => {
+        fullscreenOverlay.style.display = 'none';
+    });
+
+    // Close fullscreen when clicking outside the image
+    fullscreenOverlay.addEventListener('click', (e) => {
+        if (e.target === fullscreenOverlay) {
             fullscreenOverlay.style.display = 'none';
-        });
-
-        // Close fullscreen when clicking outside the image
-        fullscreenOverlay.addEventListener('click', (e) => {
-            if (e.target === fullscreenOverlay) {
-                fullscreenOverlay.style.display = 'none';
-            }
-        });
+        }
     });
 }
 

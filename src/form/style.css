@@ -266,29 +266,38 @@ input:focus, select:focus {
     top: 0px;
 }
 
-img {
-    pointer-events: none;
+#shorts-gallery {
+    padding-bottom: 12px;
 }
 
 .gallery {
     display: flex;
-    justify-content: center;
-    gap: 16px;
-    padding: 20px;
+    gap: 8px;
     background-color: white;
+    overflow-x: auto; /* Aktiviert horizontales Scrollen */
+    white-space: nowrap; /* Verhindert Zeilenumbrüche innerhalb des Containers */
+    width: 100%; /* Beschränkt die Breite des Containers auf die Bildschirmbreite */
+}
+
+.gallery-img-div {
+    flex: 0 0 124px;
+    width: 124px;
+    height: 124px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .gallery-img {
     width: 100%;
-    max-width: 224px;
-    height: 224px;
+    height: 100%;
     object-fit: cover;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: width var(--transition-duration), height var(--transition-duration);
 }
 
 .gallery-img:hover {
-    transform: scale(1.05);
+    width: 75%;
+    height: 75%;
 }
 
 .fullscreen-overlay {
