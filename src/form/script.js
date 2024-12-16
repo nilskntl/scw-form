@@ -296,8 +296,6 @@ function updateAvailableNumbers() {
 }
 
 function addImageGalerie() {
-    console.log('Adding Galerie');
-
     const galleryImages = document.querySelectorAll('.gallery-img');
     const fullscreenOverlay = document.getElementById('fullscreen-overlay');
     const fullscreenImg = document.getElementById('fullscreen-img');
@@ -305,9 +303,7 @@ function addImageGalerie() {
 
     // Add click event to each gallery image
     galleryImages.forEach(img => {
-    console.log('Add Event Listener');
         img.addEventListener('click', () => {
-            console.log("Clicked");
             fullscreenImg.src = img.src;
             fullscreenOverlay.style.display = 'flex';
         });
