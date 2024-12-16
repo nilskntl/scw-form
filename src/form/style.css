@@ -270,8 +270,8 @@ img {
     pointer-events: none;
 }
 
-/* Responsive Gallery Layout */
-.gallery {
+/* Responsive image grid */
+.image-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
@@ -279,19 +279,19 @@ img {
     margin: 0 auto;
 }
 
-.gallery img {
+.image-grid img {
     width: 100%;
-    height: auto;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     cursor: pointer;
     transition: transform 0.3s ease;
 }
 
-.gallery img:hover {
+.image-grid img:hover {
     transform: scale(1.05);
 }
 
-/* Lightbox Styling */
+/* Fullscreen lightbox */
 #lightbox {
     display: none;
     position: fixed;
@@ -300,9 +300,9 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    align-items: center;
+    background-color: rgba(0,0,0,0.9);
     justify-content: center;
+    align-items: center;
 }
 
 #lightbox.active {
@@ -315,10 +315,10 @@ img {
     object-fit: contain;
 }
 
-#closeLightbox {
+#close-btn {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 20px;
+    right: 20px;
     color: white;
     font-size: 30px;
     cursor: pointer;
@@ -390,9 +390,5 @@ img {
     input[type="tel"],
     select {
         font-size: 10px;
-    }
-
-    .gallery {
-        grid-template-columns: repeat(4, 1fr);
     }
 }

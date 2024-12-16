@@ -8,8 +8,8 @@ function init() {
     createShortsListener();
     fetchUsedNumbers();
 
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+        if (e.target === this) {
             closeLightbox();
         }
     });
@@ -302,8 +302,9 @@ function updateAvailableNumbers() {
 
 function openLightbox(img) {
     const lightbox = document.getElementById('lightbox');
-    const lightboxImage = document.getElementById('lightboxImage');
-    lightboxImage.src = img.src;
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    lightboxImg.src = img.src;
     lightbox.classList.add('active');
 }
 
@@ -311,6 +312,7 @@ function closeLightbox() {
     const lightbox = document.getElementById('lightbox');
     lightbox.classList.remove('active');
 }
+
 
 let usedNumbers = [];
 init();
