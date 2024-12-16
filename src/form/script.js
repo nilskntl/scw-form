@@ -6,13 +6,8 @@ function init() {
     createShirtListener();
     createCapListener();
     createShortsListener();
+    addImageGalerie();
     fetchUsedNumbers();
-
-    document.getElementById('lightbox').addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeLightbox();
-        }
-    });
 }
 
 function sendForm(formData) {
@@ -300,19 +295,34 @@ function updateAvailableNumbers() {
     availableNumbersSpan.textContent = 'Verfügbare Nummern: ' + availableNumbers.join(', ');
 }
 
-function openLightbox(img) {
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
+function addImageGalerie() {
+    document.addEventListener('DOMContentLoaded', () => {
+        const galleryImages = document.querySelectorAll('.gallery-img');
+        const fullscreenOverlay = document.getElementById('fullscreen-overlay');
+        const fullscreenImg = document.getElementById('fullscreen-img');
+        const closeBtn = document.querySelector('.close-btn');
 
-    lightboxImg.src = img.src;
-    lightbox.classList.add('active');
+        // Add click event to each gallery image
+        galleryImages.forEach(img => {
+            img.addEventListener('click', () => {
+                fullscreenImg.src = img.src;
+                fullscreenOverlay.style.display = 'flex';
+            });
+        });
+
+        // Close fullscreen when clicking close button
+        closeBtn.addEventListener('click', () => {
+            fullscreenOverlay.style.display = 'none';
+        });
+
+        // Close fullscreen when clicking outside the image
+        fullscreenOverlay.addEventListener('click', (e) => {
+            if (e.target === fullscreenOverlay) {
+                fullscreenOverlay.style.display = 'none';
+            }
+        });
+    });
 }
-
-function closeLightbox() {
-    const lightbox = document.getElementById('lightbox');
-    lightbox.classList.remove('active');
-}
-
 
 let usedNumbers = [];
 init();
