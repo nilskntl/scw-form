@@ -17,7 +17,7 @@ function verifyCompleteForm(params) {
 
     for (let param in params) {
         if (params[param] === null || params[param] === '') {
-            throw incompleteFormError;
+            throw wrongInputError;
         }
     }
 }
@@ -45,16 +45,14 @@ function handleShirt(e) {
     verifyCompleteForm(params);
 
     // Definieren der Tabellen
-    let fullSheetName = 'Shirts'; // Name der Tabelle, in die die Daten eingetragen werden sollen
-    let numbersSheetName = 'Nummern' // Name der Tabelle, in die die Nummern eingetragen werden sollen
-    let fullSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(fullSheetName); // Tabelle mit den Daten
-    let numbersSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(numbersSheetName); // Tabelle mit den Nummern
+    let sheetName = 'Shirts'; // Name der Tabelle, in die die Daten eingetragen werden sollen
+    let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName); // Tabelle mit den Daten
 
     // Nummer aus dem Formular auslesen
     let nummer = params.shirtNumber;
 
     // Überprüfen, ob die Nummer bereits vorhanden ist
-    let data = numbersSheet.getRange('A:A').getValues(); // Spalte mit den Nummern auslesen
+    let data = sheet.getRange('E:E').getValues(); // Spalte mit den Nummern auslesen
     for (let i = 0; i < data.length; i++) {
         if (data[i][0].toString() === nummer.toString()) {
             // Nummer wird bereits verwendet
@@ -80,14 +78,7 @@ function handleShirt(e) {
     rowData.push(params.amount); // Anzahl der Shirts
 
     // Daten in die Tabelle einfügen
-    fullSheet.appendRow(rowData);
-
-    // Nummer in die Nummern-Tabelle einfügen
-    let numbersData = [];
-    // Nummer hinzufügen
-    numbersData.push(params.shirtNumber);
-    // Nummer in Tabelle einfügen
-    numbersSheet.appendRow(numbersData);
+    sheet.appendRow(rowData);
 
     // Rückmeldung an den Nutzer
     return ContentService.createTextOutput("Daten erfolgreich hinzugefügt.").setMimeType(ContentService.MimeType.TEXT);

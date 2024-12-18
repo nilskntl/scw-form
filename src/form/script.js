@@ -1,5 +1,5 @@
 function init() {
-        /**
+     /**
      * Initiate all functions
      */
     createSelector();
@@ -11,7 +11,7 @@ function init() {
 }
 
 function sendForm(formData) {
-    const scriptUrl = 'https://script.google.com/macros/s/AKfycbyt_POP3rGRZN4zXP7Ni4r6XJQC20j1NkQY6cNVWsIO4YkpBTaJTwxIFh5aAZxpuZpNmg/exec';
+    const scriptUrl = 'https://script.google.com/macros/s/AKfycbzGpOFPFpeEKYx2iMu01wn4LcSaWQpRegxU-GFhUZRMZcAVDg1pndFPQJ_l4g3lapXXzg/exec';
 
     let formDataKeys = Array.from(formData.keys());
     let formDataValues = Array.from(formData.values());
@@ -260,7 +260,7 @@ function checkNumberAvailability(number) {
  * Lädt die bisher verwendeten Nummern aus einer Google-Tabelle
  */
 function fetchUsedNumbers() {
-    const scriptUrl = 'https://script.google.com/macros/s/AKfycbyt_POP3rGRZN4zXP7Ni4r6XJQC20j1NkQY6cNVWsIO4YkpBTaJTwxIFh5aAZxpuZpNmg/exec?type=numbers';
+    const scriptUrl = 'https://script.google.com/macros/s/AKfycbzGpOFPFpeEKYx2iMu01wn4LcSaWQpRegxU-GFhUZRMZcAVDg1pndFPQJ_l4g3lapXXzg/exec?type=numbers';
 
     let xhr = new XMLHttpRequest(); // XMLHttpRequest-Objekt
     xhr.open('GET', scriptUrl, true); // GET-Anfrage an das Google-Script senden
